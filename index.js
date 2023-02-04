@@ -17,7 +17,7 @@ async function run() {
 
         const { data: pullRequestComments } = await octokit.rest.issues.listComments({
             owner: github.context.repo.owner,
-            repo: github.context.repo,
+            repo: github.context.repo.repo,
             issue_number: github.context.issue.number,
         });
 
@@ -34,7 +34,7 @@ async function run() {
         if(similarCommentsCount === 0) {
             await octokit.rest.issues.createComment({
                 owner: github.context.repo.owner,
-                repo: github.context.repo,
+                repo: github.context.repo.repo,
                 issue_number: github.context.issue.number,
                 body: userCommentBody,
             });
