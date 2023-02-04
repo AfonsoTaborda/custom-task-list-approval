@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Custom Checklist Approval'
+description: 'Create a checklist'
 inputs:
   token:  # id of input
     description: 'The Github access token'

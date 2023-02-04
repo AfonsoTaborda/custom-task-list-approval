@@ -1,9 +1,9 @@
 on: [pull_request]
 
 jobs:
-  hello_world_job:
+  create-checklist:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Create the Checklist
     steps:
       - name: Checkout
         uses: actions/checkout@v3

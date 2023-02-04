@@ -10,7 +10,7 @@ async function run() {
         const myToken = core.getInput('token');
         const userCommentBody = core.getInput('body');
         if(! typeof userCommentBody === 'string') [
-            github.context.action.setFailed("The body input is not of type 'string'!")
+            core.setFailed("The body input is not of type 'string'!")
         ]
 
         const octokit = github.getOctokit(myToken);
