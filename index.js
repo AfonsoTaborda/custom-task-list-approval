@@ -13,14 +13,12 @@ async function run() {
             core.setFailed("The body input is not of type 'string'!")
         }
 
-        const context = github.context;
-
         const octokit = github.getOctokit(myToken);
 
         const { data: pullRequestComments } = await octokit.rest.issues.listComments({
-            ...context.owner,
-            ...context.repo,
-            ...context.pull_number,
+            owner: github.context.owner,
+            repo: github.context.repo,
+            issue_number: github.context.issue_number,
         });
 
         var similarCommentsCount = 0;
@@ -35,9 +33,9 @@ async function run() {
 
         if(similarCommentsCount === 0) {
             await octokit.rest.issues.createComment({
-                ...context.owner,
-                ...context.repo,
-                ...context.issue_number,
+                owner: github.context.owner,
+                repo: github.context.repo,
+                issue_number: github.context.issue_number,
                 body: userCommentBody,
             });
         }
