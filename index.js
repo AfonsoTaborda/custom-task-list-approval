@@ -40,7 +40,7 @@ async function run() {
             });
         }
       } catch (error) {
-        console.log(error.message);
+        console.log(error.body);
         core.setFailed(error.message);
       }
 }
