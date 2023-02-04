@@ -15,10 +15,10 @@ async function run() {
 
         const octokit = github.getOctokit(myToken);
 
-        const { data: pullRequestComments } = await octokit.rest.pulls.listReviewComments({
+        const { data: pullRequestComments } = await octokit.rest.issues.listComments({
             owner: github.context.owner,
             repo: github.context.repo,
-            pull_number: github.context.pull_number,
+            issue_number: github.context.pull_number,
         });
 
         var similarCommentsCount = 0;
