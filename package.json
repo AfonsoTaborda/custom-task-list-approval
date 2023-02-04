@@ -1,0 +1,23 @@
+{
+  "name": "custom-checklist-approval",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AfonsoTaborda/custom-checklist-approval.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AfonsoTaborda/custom-checklist-approval/issues"
+  },
+  "homepage": "https://github.com/AfonsoTaborda/custom-checklist-approval#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0"
+  }
+}
