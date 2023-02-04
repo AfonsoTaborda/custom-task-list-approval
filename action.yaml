@@ -7,9 +7,6 @@ inputs:
   body:
     description: The comment to be outputted
     required: true
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'node16'
   main: 'index.js'
