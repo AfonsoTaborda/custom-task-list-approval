@@ -12,3 +12,4 @@ jobs:
         id: todo
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          body: "Hello World"
