@@ -1,4 +1,5 @@
 name: 'Custom Checklist Approval'
+author: Afonso Tomás Taborda
 description: 'Create a checklist'
 inputs:
   token:  # id of input
