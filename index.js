@@ -13,6 +13,8 @@ async function run() {
             core.setFailed("The body input is not of type 'string'!")
         }
 
+        const context = github.context;
+
         const octokit = github.getOctokit(myToken);
 
         const { data: pullRequestComments } = await octokit.rest.issues.listComments({
