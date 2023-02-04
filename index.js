@@ -16,9 +16,9 @@ async function run() {
         const octokit = github.getOctokit(myToken);
 
         const { data: pullRequestComments } = await octokit.rest.issues.listComments({
-            owner: github.context.owner,
+            owner: github.context.repo.owner,
             repo: github.context.repo,
-            issue_number: github.context.issue_number,
+            issue_number: github.context.issue.number,
         });
 
         var similarCommentsCount = 0;
@@ -33,9 +33,9 @@ async function run() {
 
         if(similarCommentsCount === 0) {
             await octokit.rest.issues.createComment({
-                owner: github.context.owner,
+                owner: github.context.repo.owner,
                 repo: github.context.repo,
-                issue_number: github.context.issue_number,
+                issue_number: github.context.issue.number,
                 body: userCommentBody,
             });
         }
