@@ -5,7 +5,7 @@ inputs:
     description: 'The Github access token'
     required: true
   body:
-    description: The comment to be outputted
+    description: 'The comment to be outputted'
     required: true
 runs:
   using: 'node16'
