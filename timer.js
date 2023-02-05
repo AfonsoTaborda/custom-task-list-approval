@@ -44,8 +44,8 @@ async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, 
 }
 
 async function timer(timeout, octokit, commentId, TASK_LIST_ITEM) {
-    var isCompleteArr = await updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM);
     const count = await printTaskListCompletionStatus(isCompleteArr, octokit, commentId, TASK_LIST_ITEM);
+    var isCompleteArr = await updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM);
 
     console.log(`Found ${count} tasks to complete, starting the timer...`);
     var sec = timeout * 60;
