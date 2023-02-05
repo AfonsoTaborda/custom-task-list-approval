@@ -32,10 +32,6 @@ function printTaskListCompletionStatus(octokit, resultComment, similarCommentId,
 }
 
 async function timer(timeout, octokit, similarCommentId, resultComment, TASK_LIST_ITEM) {
-    if (!comment) {
-        throw "The source comment could not be fetched";
-    }
-
     var isCompleteArr = [];
     var count = 0;
     printTaskListCompletionStatus(octokit, resultComment, similarCommentId, isCompleteArr, TASK_LIST_ITEM);

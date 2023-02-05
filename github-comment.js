@@ -22,6 +22,10 @@ async function getGithubComment(octokit, resultComment, similarCommentId) {
         console.log(`Fetched the existing comment ${comment.body}`);
     }
 
+    if (!comment) {
+        throw "The source comment could not be fetched";
+    }
+
     return comment;
 }
 
