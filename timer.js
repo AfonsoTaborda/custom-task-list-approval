@@ -23,8 +23,9 @@ async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, 
 
     const pause = setInterval(() => {
         console.log("Waiting for the comment to be initially created...");
-        clearInterval(pause);
     }, 4000);
+
+    clearInterval(pause);
 
     const commentBody = await getGithubComment(octokit, commentId);
 
@@ -44,7 +45,7 @@ async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, 
     return count;
 }
 
-async function timer(timeout, octokit, commentId, TASK_LIST_ITEM) {
+async function runTimer(timeout, octokit, commentId, TASK_LIST_ITEM) {
     const count = await printTaskListCompletionStatus(isCompleteArr, octokit, commentId, TASK_LIST_ITEM);
     var isCompleteArr = await updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM);
 
@@ -69,4 +70,4 @@ async function timer(timeout, octokit, commentId, TASK_LIST_ITEM) {
     }, 1000);
 }
 
-module.exports = timer;
+module.exports = runTimer;
