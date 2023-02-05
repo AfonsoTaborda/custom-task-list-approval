@@ -10,7 +10,6 @@ async function run() {
         const myToken = core.getInput('token');
         const userChecklist = core.getInput('checklist-items');
         const title = core.getInput('comment-title');
-        const header = core.getInput('comment-header');
         const body = core.getInput('comment-body');
 
         if(!typeof userChecklist === 'string') {
@@ -22,10 +21,6 @@ async function run() {
 
         if (title) {
             resultComment += "# " + title + "\n";
-        }
-
-        if (header) {
-            resultComment += "## " + header + "\n";
         }
 
         if (body) {
