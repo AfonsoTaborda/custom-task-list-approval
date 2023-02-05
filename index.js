@@ -96,19 +96,22 @@ async function run() {
 
             var isCompleteArr = [];
             let count = 0;
-            for (let item of comment.body.split("\n").match(TASK_LIST_ITEM)) {
-                var isComplete = item[1] != " ";
-                var itemText = item[2];
+            for (let item of comment.body.split("\n")) {
+                let matches = item.match(TASK_LIST_ITEM);
+                for (let match of matches) {
+                    var isComplete = match[1] != " ";
+                    var itemText = match[2];
 
-                console.log(`Found the following checklist items: ${item}`);
+                    console.log(`Found the following checklist items: ${item}`);
 
-                count++;
+                    count++;
 
-                if (isComplete && !isCompleteArr.includes(itemText)) {
-                    isCompleteArr.push(itemText);
-                    console.log(`${itemText} is complete ✅`);
-                } else {
-                    console.log(`${itemText} has not been completed yet ❌`);
+                    if (isComplete && !isCompleteArr.includes(itemText)) {
+                        isCompleteArr.push(itemText);
+                        console.log(`${itemText} is complete ✅`);
+                    } else {
+                        console.log(`${itemText} has not been completed yet ❌`);
+                    }
                 }
             }
 
