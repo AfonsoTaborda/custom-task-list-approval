@@ -50,14 +50,14 @@ async function timer(timeout, octokit, similarCommentId, resultComment) {
         sec--;
 
         if (sec < 0 || isCompleteArr.length == count && count != 0) {
+            if(isCompleteArr.length != count) {
+                core.setFailed("The timer has ended and not all the tasks have been completed, failing the workflow...");
+            }
+            
             console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
             clearInterval(interval);
         }
     }, 1000);
-
-    if(isCompleteArr.length != count) {
-        core.setFailed("The timer has ended and not all the tasks have been completed, failing the workflow...");
-    }
 }
 
 module.exports = timer;
