@@ -20,7 +20,7 @@ async function getGithubComment(octokit, commentId) {
     while (retryCount < maxRetries) {
         try {
             if(retryCount > 0) {
-                pause(2000);
+                await pause(2000);
             }
 
             // If there are no similar comments, then post the comment
