@@ -92,6 +92,7 @@ async function run() {
             if (!comment) {
                 throw "The source comment could not be fetched";
             }
+
             var isCompleteArr = [];
             var checklistItems = [comment.data.body.matchAll(TASK_LIST_ITEM)];
             for (let item in checklistItems) {
@@ -100,6 +101,9 @@ async function run() {
 
                 if (isComplete && !isCompleteArr.includes(itemText)) {
                     isCompleteArr.push(itemText);
+                    console.log(`${itemText} is complete ✅`);
+                } else {
+                    console.log(`${itemText} has not been completed yet ❌`);
                 }
             }
 
