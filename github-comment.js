@@ -1,4 +1,5 @@
 const github = require('@actions/github');
+const pause = require('./pauser');
 
 async function createGithubComment(octokit, commentBody) {
     console.log("No similar comments found, creating the comment...");
@@ -8,6 +9,8 @@ async function createGithubComment(octokit, commentBody) {
         issue_number: github.context.issue.number,
         body: commentBody,
     });
+
+    pause(10000);
 
     return comment.body;
 }

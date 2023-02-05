@@ -50,6 +50,11 @@ async function run() {
             }
         }
 
+        if (typeof similarCommentId === "undefined") {
+            var comment = await createGithubComment(octokit, resultComment);
+            similarCommentId = comment.id;
+        }
+
         // Loop through the user added checklist items,
         // And append them into the resulting comment
         for (let item of userChecklist.split(";")) {
@@ -60,11 +65,6 @@ async function run() {
 
         if (resultComment === "") {
             throw "The comment to be added is empty!";
-        }
-
-        if (typeof similarCommentId === "undefined") {
-            var comment = await createGithubComment(octokit, resultComment);
-            similarCommentId = comment.id;
         }
 
         runTimer(timeout, octokit, similarCommentId, TASK_LIST_ITEM);
