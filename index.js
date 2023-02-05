@@ -81,12 +81,13 @@ async function run() {
                     body: resultComment,
                 });
             } else {
-                console.log("A similar comment has been found, getting a reference to it...");
                 comment = await octokit.rest.issues.getComment({
                     owner: github.context.repo.owner,
                     repo: github.context.repo.repo,
                     comment_id: similarCommentId,
                 });
+
+                console.log(`A similar comment has been found with id: ${comment.data.id}`);
             }
 
             if (!comment) {
@@ -94,7 +95,7 @@ async function run() {
             }
 
             var isCompleteArr = [];
-            var checklistItems = [comment.data.body.matchAll(TASK_LIST_ITEM)];
+            var checklistItems = [...comment.data.body.matchAll(TASK_LIST_ITEM)];
             console.log(`Found the following checklist items: ${checklistItems}`);
             for (let item of checklistItems) {
                 var isComplete = item[1] != " ";
