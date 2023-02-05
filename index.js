@@ -83,6 +83,10 @@ async function run() {
             });
         }
 
+        if (!comment) {
+            throw "The source comment could not be fetched";
+        }
+
         var sec = timeout * 60;
         var timer = setInterval(async function(){
             var isCompleteArr = [];
