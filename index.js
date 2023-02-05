@@ -97,9 +97,12 @@ async function run() {
             var isCompleteArr = [];
             var checklistItems = TASK_LIST_ITEM.exec(comment.body);
             console.log(`Found the following checklist items: ${checklistItems}`);
+            let count = 0;
             while ((item = TASK_LIST_ITEM.exec(comment.body))) {
                 var isComplete = item[1] != " ";
                 var itemText = item[2];
+
+                count++;
 
                 if (isComplete && !isCompleteArr.includes(itemText)) {
                     isCompleteArr.push(itemText);
@@ -111,7 +114,7 @@ async function run() {
 
             sec--;
 
-            if (sec < 0 || isCompleteArr.length == checklistItems.length && checklistItems.length != 0) {
+            if (sec < 0 || isCompleteArr.length == count && count != 0) {
                 console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
                 clearInterval(timer);
             }
