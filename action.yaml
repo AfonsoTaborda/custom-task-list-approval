@@ -1,12 +1,18 @@
 name: 'Custom Checklist Approval'
-author: Afonso Tomás Taborda
+author: 'Afonso Tomás Taborda'
 description: 'Create a checklist'
 inputs:
   token:  # id of input
     description: 'The Github access token'
     required: true
-  body:
-    description: 'The comment to be outputted'
+  comment-title:
+    description: 'The title to be added into the comment'
+  comment-header:
+    description: 'The header that comes before the body'
+  comment-body:
+    description: 'The body of text that comes befores the checklist items'
+  checklist-items: # Like checklist item 1;checklist item 2;random item 3;
+    description: 'The user-created checklist of items'
     required: true
 runs:
   using: 'node16'
