@@ -4,8 +4,8 @@ const getGithubComment = require('./github-comment');
 var isCompleteArr = [];
 var count = 0;
 
-function updateTaskListCompletion(isCompleteArr, octokit, resultComment, similarCommentId, TASK_LIST_ITEM) {
-    const commentBody = getGithubComment(octokit, resultComment, similarCommentId);
+async function updateTaskListCompletion(isCompleteArr, octokit, resultComment, similarCommentId, TASK_LIST_ITEM) {
+    const commentBody = await getGithubComment(octokit, resultComment, similarCommentId);
 
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
@@ -19,8 +19,8 @@ function updateTaskListCompletion(isCompleteArr, octokit, resultComment, similar
     }
 }
 
-function printTaskListCompletionStatus(octokit, resultComment, similarCommentId, isCompleteArr, TASK_LIST_ITEM) {
-    const commentBody = getGithubComment(octokit, resultComment, similarCommentId);
+async function printTaskListCompletionStatus(octokit, resultComment, similarCommentId, isCompleteArr, TASK_LIST_ITEM) {
+    const commentBody = await getGithubComment(octokit, resultComment, similarCommentId);
 
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
@@ -35,14 +35,14 @@ function printTaskListCompletionStatus(octokit, resultComment, similarCommentId,
 }
 
 async function timer(timeout, octokit, similarCommentId, resultComment, TASK_LIST_ITEM) {
-    printTaskListCompletionStatus(octokit, resultComment, similarCommentId, isCompleteArr, TASK_LIST_ITEM);
+    await printTaskListCompletionStatus(octokit, resultComment, similarCommentId, isCompleteArr, TASK_LIST_ITEM);
 
     console.log("Starting the timer...");
     var sec = timeout * 60;
     var interval = setInterval(async function() {
         console.log(`You have ${sec} seconds left and ${isCompleteArr.length} tasks currently completed`);
 
-        updateTaskListCompletion(isCompleteArr, octokit, resultComment, similarCommentId, TASK_LIST_ITEM);
+        await updateTaskListCompletion(isCompleteArr, octokit, resultComment, similarCommentId, TASK_LIST_ITEM);
 
         sec--;
 
