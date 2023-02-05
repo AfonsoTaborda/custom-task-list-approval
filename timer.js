@@ -6,7 +6,7 @@ let isCompleteArr = [];
 async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
     var commentBody = await getGithubComment(octokit, commentId);
 
-    while ((match = TASK_LIST_ITEM.exec(commentBody.body)) !== null) {
+    while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
 
@@ -22,7 +22,7 @@ async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, 
     var count = 0;
     const commentBody = await getGithubComment(octokit, commentId);
 
-    while ((match = TASK_LIST_ITEM.exec(commentBody.body)) !== null) {
+    while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
 

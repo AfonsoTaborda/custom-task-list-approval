@@ -9,7 +9,7 @@ async function createGithubComment(octokit, commentBody) {
         body: commentBody,
     });
 
-    return comment;
+    return comment.body;
 }
 
 async function getGithubComment(octokit, commentId) {
