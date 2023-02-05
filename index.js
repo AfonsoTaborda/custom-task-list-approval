@@ -1,7 +1,8 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const runTimer = require('./timer');
-const{createGithubComment} = require('./github-comment');
+const {createGithubComment} = require('./github-comment');
+const pause = require('./pauser');
 
 const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
 
@@ -66,6 +67,8 @@ async function run() {
         if (resultComment === "") {
             throw "The comment to be added is empty!";
         }
+
+        pause(10000);
 
         runTimer(timeout, octokit, similarCommentId, TASK_LIST_ITEM);
       } catch (error) {
