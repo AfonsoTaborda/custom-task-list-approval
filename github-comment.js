@@ -74,6 +74,7 @@ async function getGithubComment(octokit, commentId) {
     
             return comment.body;
         } catch(error) {
+            retryCount++;
             console.error(error);
         }
     }
