@@ -60,7 +60,7 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        if (similarCommentId === null) {
+        if (typeof similarCommentId === "undefined") {
             var comment = await createGithubComment(octokit, resultComment);
             similarCommentId = comment.id;
         }
