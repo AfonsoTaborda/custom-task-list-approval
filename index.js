@@ -114,7 +114,7 @@ async function run() {
 
             sec--;
 
-            if (sec < 0 || isCompleteArr.length == count) {
+            if (sec < 0 || isCompleteArr.length == count && count != 0) {
                 console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
                 clearInterval(timer);
             }
