@@ -97,7 +97,7 @@ async function run() {
             var isCompleteArr = [];
             let count = 0;
             for (let item of comment.body.split("\n")) {
-                let matches = item.match(TASK_LIST_ITEM);
+                let matches = item.matchAll(TASK_LIST_ITEM);
                 for (let match of matches) {
                     var isComplete = match[1] != " ";
                     var itemText = match[2];
