@@ -83,16 +83,8 @@ async function run() {
             });
         }
 
-        const commentId = comment.data.id;
-
         var sec = timeout * 60;
         var timer = setInterval(async function(){
-            var comment = await octokit.rest.pulls.getReviewComment({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                comment_id: commentId,
-            });
-
             var isCompleteArr = [];
             var checklistItems = [...comment.data.body.matchAll(TASK_LIST_ITEM)];
             for (let item in checklistItems) {
