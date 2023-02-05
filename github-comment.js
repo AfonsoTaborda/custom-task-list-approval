@@ -34,6 +34,8 @@ async function initializeComment() {
         }
     }
 
+    console.log("Finished initializing the comment variables");
+
     return octokit, inputs.timeout, pullRequestComments, resultComment, inputs.userChecklist, inputs.title, inputs.body;
 }
 
