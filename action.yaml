@@ -2,7 +2,7 @@ name: 'Custom Checklist Approval'
 author: 'Afonso Tomás Taborda'
 description: 'Create a checklist'
 inputs:
-  token:  # id of input
+  token:
     description: 'The Github access token'
     required: true
   comment-title:

@@ -1,6 +1,5 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
-const pause = require('./pauser');
 const inputs = require('./inputs');
 
 async function initializeComment() {
@@ -52,6 +51,18 @@ async function createGithubComment(octokit, commentBody) {
 }
 
 async function getGithubComment(octokit, commentId) {
+    const { data: pullRequestComments } = await octokit.rest.issues.listComments({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        issue_number: github.context.issue.number,
+    });
+
+    for (let comment of pullRequestComments) {
+        if(comment.id == commentId) {
+            break;
+        }
+    }
+
     // If there are no similar comments, then post the comment
     var { data: comment } = await octokit.rest.issues.getComment({
         owner: github.context.repo.owner,
