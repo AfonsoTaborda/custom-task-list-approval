@@ -1,4 +1,4 @@
-const github = require('@actions/github');
+const core = require('@actions/core');
 
 function printTaskListCompletionStatus(commentBody, count, isCompleteArr, TASK_LIST_ITEM) {
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
@@ -38,6 +38,10 @@ async function timer(comment, timeout, TASK_LIST_ITEM) {
             clearInterval(interval);
         }
     }, 1000);
+
+    if(isCompleteArr.length != count) {
+        core.setFailed("The timer has ended and not all the tasks have been completed, failing the workflow...");
+    }
 }
 
 module.exports = timer;
