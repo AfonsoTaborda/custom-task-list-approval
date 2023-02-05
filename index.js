@@ -34,10 +34,11 @@ async function run() {
             issue_number: github.context.issue.number,
         });
 
+        // Check if there are similar comments already posted
         var similarCommentsCount = 0;
         if(pullRequestComments.length != 0) {
             for (let comment of pullRequestComments) {
-                if(comment.body.includes(userChecklist)) {
+                if(comment.body.includes(title) || comment.body.includes(header) || comment.body.includes(userChecklist.split(";"))) {
                     similarCommentsCount++;
                 }
             }
