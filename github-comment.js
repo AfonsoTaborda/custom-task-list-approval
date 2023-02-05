@@ -59,7 +59,7 @@ async function getGithubComment(octokit, commentId) {
     });
 
     for (let comment of pullRequestComments) {
-        while(comment.id == commentId) {
+        while(comment.id != commentId) {
             console.log("Found the comment!");
             await pause(2000);
         }
