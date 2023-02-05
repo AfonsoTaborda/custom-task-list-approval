@@ -13,6 +13,14 @@ async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
         if (isComplete && !completedTasksArr.includes(itemText)) {
             completedTasksArr.push(itemText);
         }
+
+        if(!isComplete && completedTasksArr.includes(itemText)) {
+            const index = completedTasksArr.indexOf(itemText);
+
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+        }
     }
 
     return completedTasksArr;
