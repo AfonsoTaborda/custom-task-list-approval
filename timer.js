@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const {getGithubComment} = require('./github-comment');
+const {getGithubComment,deleteGithubComment} = require('./github-comment');
 
 let isCompleteArr = [];
 
@@ -57,6 +57,7 @@ async function timer(timeout, octokit, commentId, TASK_LIST_ITEM) {
             }
 
             console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
+            await deleteGithubComment(octokit, commentId);
             clearInterval(interval);
         }
     }, 1000);
