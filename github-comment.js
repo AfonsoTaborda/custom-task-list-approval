@@ -1,14 +1,7 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 const pause = require('./pauser');
-
-const inputs = {
-    myToken: core.getInput('token'),
-    userChecklist: core.getInput('checklist-items'),
-    title: core.getInput('comment-title'),
-    body: core.getInput('comment-body'),
-    timeout: parseInt(core.getInput('completion-timeout')),
-}
+const inputs = require('./inputs');
 
 async function initializeComment() {
     if (!typeof inputs.userChecklist === 'string') {
