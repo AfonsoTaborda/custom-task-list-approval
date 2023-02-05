@@ -2,7 +2,6 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const runTimer = require('./timer');
 const {createGithubComment} = require('./github-comment');
-const pause = require('./pauser');
 
 const CHECK_LIST_REGEX = /\[(x|X|\s)\](.*)/g;
 
