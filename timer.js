@@ -3,7 +3,6 @@ const getGithubComment = require('./github-comment');
 
 const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
 var isCompleteArr = [];
-var count = 0;
 
 async function updateTaskListCompletion(octokit, resultComment, similarCommentId) {
     const commentBody = await getGithubComment(octokit, resultComment, similarCommentId);
@@ -19,6 +18,7 @@ async function updateTaskListCompletion(octokit, resultComment, similarCommentId
 }
 
 async function printTaskListCompletionStatus(octokit, resultComment, similarCommentId) {
+    var count = 0;
     const commentBody = await getGithubComment(octokit, resultComment, similarCommentId);
 
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
@@ -33,10 +33,12 @@ async function printTaskListCompletionStatus(octokit, resultComment, similarComm
             console.log(`${itemText} has not been completed yet ❌`);
         }
     }
+
+    return count;
 }
 
 async function timer(timeout, octokit, similarCommentId, resultComment) {
-    await printTaskListCompletionStatus(octokit, resultComment, similarCommentId);
+    const count = await printTaskListCompletionStatus(octokit, resultComment, similarCommentId);
 
     console.log("Starting the timer...");
     var sec = timeout * 60;
