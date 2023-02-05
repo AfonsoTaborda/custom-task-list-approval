@@ -42,13 +42,14 @@ async function timer(timeout, similarCommentsCount, similarCommentId, resultComm
         throw "The source comment could not be fetched";
     }
 
+    printTaskListCompletionStatus(comment.body, count, isCompleteArr, TASK_LIST_ITEM);
+
     var interval = setInterval(async function() {
         console.log("Starting the timer...");
         var sec = timeout * 60;
 
         var isCompleteArr = [];
         let count = 0;
-        printTaskListCompletionStatus(comment.body, count, isCompleteArr, TASK_LIST_ITEM);
 
         sec--;
 
