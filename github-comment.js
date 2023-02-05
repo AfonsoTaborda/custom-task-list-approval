@@ -27,5 +27,7 @@ async function getGithubComment(octokit, commentId) {
     return comment.body;
 }
 
-module.exports = getGithubComment;
-module.exports = createGithubComment;
+module.exports = {
+    getGithubComment,
+    createGithubComment,
+};
