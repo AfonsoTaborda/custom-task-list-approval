@@ -3,6 +3,7 @@ const {getGithubComment} = require('./github-comment');
 
 async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
     var commentBody = await getGithubComment(octokit, commentId);
+    let isCompleteArr = [];
 
     while ((match = TASK_LIST_ITEM.exec(commentBody.body)) !== null) {
         var isComplete = match[1] != " ";
