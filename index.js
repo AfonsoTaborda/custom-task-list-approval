@@ -4,7 +4,6 @@ const timer = require('./timer');
 const {createGithubComment} = require('./github-comment');
 
 const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
-let isCompleteArr = [];
 
 async function run() {
     try {
@@ -68,7 +67,7 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        timer(timeout, octokit, similarCommentId, isCompleteArr, TASK_LIST_ITEM);
+        timer(timeout, octokit, similarCommentId, TASK_LIST_ITEM);
       } catch (error) {
         core.setFailed(error);
       }

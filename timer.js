@@ -1,7 +1,9 @@
 const core = require('@actions/core');
 const {getGithubComment} = require('./github-comment');
 
-async function updateTaskListCompletion(octokit, commentId, isCompleteArr, TASK_LIST_ITEM) {
+let isCompleteArr = [];
+
+async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
     var commentBody = await getGithubComment(octokit, commentId);
 
     while ((match = TASK_LIST_ITEM.exec(commentBody.body)) !== null) {
@@ -14,7 +16,7 @@ async function updateTaskListCompletion(octokit, commentId, isCompleteArr, TASK_
     }
 }
 
-async function printTaskListCompletionStatus(octokit, commentId, isCompleteArr, TASK_LIST_ITEM) {
+async function printTaskListCompletionStatus(octokit, commentId, TASK_LIST_ITEM) {
     var count = 0;
     const commentBody = await getGithubComment(octokit, commentId);
 
@@ -34,15 +36,15 @@ async function printTaskListCompletionStatus(octokit, commentId, isCompleteArr, 
     return count;
 }
 
-async function timer(timeout, octokit, commentId, isCompleteArr, TASK_LIST_ITEM) {
-    const count = await printTaskListCompletionStatus(octokit, commentId, isCompleteArr, TASK_LIST_ITEM);
+async function timer(timeout, octokit, commentId, TASK_LIST_ITEM) {
+    const count = await printTaskListCompletionStatus(octokit, commentId, TASK_LIST_ITEM);
 
     console.log("Starting the timer...");
     var sec = timeout * 60;
     var interval = setInterval(async function() {
-        console.log(`You have ${sec} seconds left and ${isCompleteArr.length} tasks currently completed`);
+        console.log(`You have ${sec} seconds left to complete the tasks`);
 
-        await updateTaskListCompletion(octokit, commentId, isCompleteArr, TASK_LIST_ITEM);
+        await updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM);
 
         sec--;
 
