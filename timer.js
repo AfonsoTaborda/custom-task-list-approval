@@ -1,6 +1,6 @@
 const github = require('@actions/github');
 
-export async function timer(timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM) {
+async function timer(timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM) {
     console.log("Starting the timer...");
     var sec = timeout * 60;
 
