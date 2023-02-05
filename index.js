@@ -47,7 +47,7 @@ async function run() {
             for (let comment of pullRequestComments) {
                 if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
                     similarCommentsCount++;
-                    similarCommentId = similarCommentId;
+                    similarCommentId = comment.id;
                 } else {
                     console.log("A similar comment has been found, skipping posting this one...");
                 }
