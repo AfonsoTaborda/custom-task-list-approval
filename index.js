@@ -76,7 +76,7 @@ async function run() {
                 body: resultComment,
             });
         } else {
-            comment = await octokit.rest.pulls.getReviewComment({
+            comment = await octokit.rest.issues.getComment({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 comment_id: similarCommentId,
