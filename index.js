@@ -86,9 +86,9 @@ async function run() {
                     repo: github.context.repo.repo,
                     comment_id: similarCommentId,
                 });
-            }
 
-            console.log(`Fetched the existing comment ${comment.body}`);
+                console.log(`Fetched the existing comment ${comment.body}`);
+            }
 
             if (!comment) {
                 throw "The source comment could not be fetched";
@@ -111,7 +111,8 @@ async function run() {
 
             sec--;
 
-            if (sec < 0 || isCompleteArr.length == checklistItems.length) {
+            if (sec < 0 || isCompleteArr.length == checklistItems.length && checklistItems.length != 0) {
+                console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
                 clearInterval(timer);
             }
         }, 1000);
