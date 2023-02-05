@@ -1,6 +1,9 @@
 const core = require('@actions/core');
+const getGithubComment = require('./github-comment');
 
-function updateTaskListCompletion(commentBody, count, isCompleteArr, TASK_LIST_ITEM) {
+function updateTaskListCompletion(isCompleteArr, octokit, resultComment, similarCommentId, TASK_LIST_ITEM) {
+    const commentBody = getGithubComment(octokit, resultComment, similarCommentId);
+
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
@@ -13,7 +16,9 @@ function updateTaskListCompletion(commentBody, count, isCompleteArr, TASK_LIST_I
     }
 }
 
-function printTaskListCompletionStatus(commentBody, isCompleteArr, TASK_LIST_ITEM) {
+function printTaskListCompletionStatus(octokit, resultComment, similarCommentId, isCompleteArr, TASK_LIST_ITEM) {
+    const commentBody = getGithubComment(octokit, resultComment, similarCommentId);
+
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
@@ -26,14 +31,14 @@ function printTaskListCompletionStatus(commentBody, isCompleteArr, TASK_LIST_ITE
     }
 }
 
-async function timer(comment, timeout, TASK_LIST_ITEM) {
+async function timer(timeout, octokit, similarCommentId, resultComment, TASK_LIST_ITEM) {
     if (!comment) {
         throw "The source comment could not be fetched";
     }
 
     var isCompleteArr = [];
     var count = 0;
-    printTaskListCompletionStatus(comment.body, isCompleteArr, TASK_LIST_ITEM);
+    printTaskListCompletionStatus(octokit, resultComment, similarCommentId, isCompleteArr, TASK_LIST_ITEM);
 
     console.log("Starting the timer...");
     var sec = timeout * 60;

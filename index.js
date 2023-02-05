@@ -1,7 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const timer = require('./timer');
-const getGithubComment = require('./github-comment');
 
 async function run() {
     try {
@@ -61,7 +60,7 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        timer(getGithubComment(octokit, resultComment, similarCommentId), timeout, TASK_LIST_ITEM);
+        timer(timeout, octokit,similarCommentId, resultComment, TASK_LIST_ITEM);
       } catch (error) {
         core.setFailed(error);
       }
