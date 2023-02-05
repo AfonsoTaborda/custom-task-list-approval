@@ -68,19 +68,18 @@ async function run() {
         var timer = setTimeout(async function(){
             console.log("Starting the timer...");
             var sec = timeout * 60;
-            var comment;
 
             // If there are no similar comments, then post the comment
             if (similarCommentsCount === 0) {
                 console.log("No similar comments found, creating the comment...");
-                comment = await octokit.rest.issues.createComment({
+                var { data: comment } = await octokit.rest.issues.createComment({
                     owner: github.context.repo.owner,
                     repo: github.context.repo.repo,
                     issue_number: github.context.issue.number,
                     body: resultComment,
                 });
             } else {
-                comment = await octokit.rest.issues.getComment({
+                var { data: comment } = await octokit.rest.issues.getComment({
                     owner: github.context.repo.owner,
                     repo: github.context.repo.repo,
                     comment_id: similarCommentId,
@@ -92,7 +91,7 @@ async function run() {
             }
 
             var isCompleteArr = [];
-            var checklistItems = [...comment.data.body.matchAll(TASK_LIST_ITEM)];
+            var checklistItems = [...comment.body.matchAll(TASK_LIST_ITEM)];
             console.log(`Found the following checklist items: ${checklistItems}`);
             for (let item of checklistItems) {
                 var isComplete = item[1] != " ";
