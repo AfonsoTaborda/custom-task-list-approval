@@ -29,7 +29,7 @@ async function timer(comment, timeout, TASK_LIST_ITEM) {
     var interval = setInterval(async function() {
         var sec = timeout * 60;
 
-        console.log(`You have ${timeout} minutes left and ${isCompleteArr.length} tasks currently completed`);
+        console.log(`You have ${sec} seconds left and ${isCompleteArr.length} tasks currently completed`);
 
         sec--;
 
