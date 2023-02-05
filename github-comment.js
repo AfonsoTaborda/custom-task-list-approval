@@ -13,26 +13,27 @@ async function createGithubComment(octokit, commentBody) {
 }
 
 async function getGithubComment(octokit, commentId) {
-    while (await octokit.rest.issues.getComment({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        comment_id: commentId,
-    })) {
-        console.log("Waiting for the comment to become available");
+    const maxRetries = 3;
+    let retryCount = 0;
+
+    while (retryCount < maxRetries) {
+        try {
+            // If there are no similar comments, then post the comment
+            var { data: comment } = await octokit.rest.issues.getComment({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                comment_id: commentId,
+            });
+    
+            if (!comment) {
+                throw "The source comment could not be fetched";
+            }
+    
+            return comment.body;
+        } catch(error) {
+            console.error(error);
+        }
     }
-
-    // If there are no similar comments, then post the comment
-    var { data: comment } = await octokit.rest.issues.getComment({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        comment_id: commentId,
-    });
-
-    if (!comment) {
-        throw "The source comment could not be fetched";
-    }
-
-    return comment.body;
 }
 
 async function deleteGithubComment(octokit, commentId) {
