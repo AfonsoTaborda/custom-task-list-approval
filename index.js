@@ -60,7 +60,7 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        if (isNaN(similarCommentId)) {
+        if (!isNaN(similarCommentId)) {
             var comment = await createGithubComment(octokit, resultComment);
             similarCommentId = comment.id;
         }
