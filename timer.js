@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const {getGithubComment,deleteGithubComment} = require('./github-comment');
+const {pause} = require('./pauser');
 
 let isCompleteArr = [];
 
@@ -21,11 +22,7 @@ async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
 async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, TASK_LIST_ITEM) {
     var count = 0;
 
-    const pause = setInterval(() => {
-        console.log("Waiting for the comment to be initially created...");
-    }, 4000);
-
-    clearInterval(pause);
+    pause(4000);
 
     const commentBody = await getGithubComment(octokit, commentId);
 
