@@ -67,9 +67,7 @@ async function getGithubComment(octokit, commentId) {
 }
 
 async function deleteGithubComment(octokit, commentId) {
-    const isToDeleteComment = core.getInput('delete-comment-after-completion');
-
-    if(isToDeleteComment) {
+    if(inputs.deleteCommentAfterCompletion) {
         await octokit.rest.issues.deleteComment({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
