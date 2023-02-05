@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const {getGithubComment,deleteGithubComment} = require('./github-comment');
 
-let isCompleteArr = [];
+let completedTasksArr = [];
 
 async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
     var commentBody = await getGithubComment(octokit, commentId);
@@ -10,15 +10,15 @@ async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
 
-        if (isComplete && !isCompleteArr.includes(itemText)) {
-            isCompleteArr.push(itemText);
+        if (isComplete && !completedTasksArr.includes(itemText)) {
+            completedTasksArr.push(itemText);
         }
     }
 
-    return isCompleteArr;
+    return completedTasksArr;
 }
 
-async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, CHECK_LIST_REGEX) {
+async function printInitialCompletionStatus(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX) {
     var count = 0;
 
     const commentBody = await getGithubComment(octokit, commentId);
@@ -29,7 +29,7 @@ async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, 
 
         count++;
 
-        if (isComplete && !isCompleteArr.includes(itemText)) {
+        if (isComplete && !completedTasksArr.includes(itemText)) {
             console.log(`${itemText} is complete ✅`);
         } else {
             console.log(`${itemText} has not been completed yet ❌`);
@@ -40,24 +40,24 @@ async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, 
 }
 
 async function runTimer(timeout, octokit, commentId, CHECK_LIST_REGEX) {
-    const count = await printTaskListCompletionStatus(isCompleteArr, octokit, commentId, CHECK_LIST_REGEX);
-    var isCompleteArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
+    const count = await printInitialCompletionStatus(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX);
+    var completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
     console.log(`Found ${count} tasks to complete, starting the timer...`);
     var sec = timeout * 60;
     var interval = setInterval(async function() {
-        isCompleteArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
+        completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
-        console.log(`You have ${sec} seconds and ${isCompleteArr.length} tasks completed`);
+        console.log(`You have ${sec} seconds and ${completedTasksArr.length} tasks completed`);
 
         sec--;
 
-        if (sec < 0 || isCompleteArr.length == count && count != 0) {
-            if(isCompleteArr.length != count) {
+        if (sec < 0 || completedTasksArr.length == count && count != 0) {
+            if(completedTasksArr.length != count) {
                 core.setFailed("The timer has ended and not all the tasks have been completed, failing the workflow...");
             }
 
-            console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
+            console.log(`Clearing the timeout with sec = ${sec} and completedTasksArr.length = ${completedTasksArr.length}`);
             await deleteGithubComment(octokit, commentId);
             clearInterval(interval);
         }
