@@ -25,9 +25,11 @@ async function timer(comment, timeout, TASK_LIST_ITEM) {
     let count = 0;
     printTaskListCompletionStatus(comment.body, count, isCompleteArr, TASK_LIST_ITEM);
 
+    console.log("Starting the timer...");
     var interval = setInterval(async function() {
-        console.log("Starting the timer...");
         var sec = timeout * 60;
+
+        console.log(`You have ${timeout} minutes left and ${isCompleteArr.length} tasks currently completed`);
 
         sec--;
 
