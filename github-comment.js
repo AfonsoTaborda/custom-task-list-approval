@@ -28,11 +28,15 @@ async function getGithubComment(octokit, commentId) {
 }
 
 async function deleteGithubComment(octokit, commentId) {
-    await octokit.rest.issues.deleteComment({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        comment_id: commentId,
-    });
+    const isToDeleteComment = core.getInput('delete-comment-after-completion');
+
+    if(isToDeleteComment) {
+        await octokit.rest.issues.deleteComment({
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
+            comment_id: commentId,
+        });
+    }
 }
 
 module.exports = {
