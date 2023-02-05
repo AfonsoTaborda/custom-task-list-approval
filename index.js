@@ -3,6 +3,9 @@ const github = require('@actions/github');
 const timer = require('./timer');
 const {createGithubComment} = require('./github-comment');
 
+const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
+let isCompleteArr = [];
+
 async function run() {
     try {
         // This should be a token with access to your repository scoped in as a secret.
@@ -65,7 +68,7 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        timer(timeout, octokit, similarCommentId);
+        timer(timeout, octokit, similarCommentId, isCompleteArr, TASK_LIST_ITEM);
       } catch (error) {
         core.setFailed(error);
       }
