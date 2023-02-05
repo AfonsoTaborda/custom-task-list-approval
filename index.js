@@ -66,7 +66,7 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        await timer.timer(timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM);
+        setInterval(timer.timer(timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM), 1000);
       } catch (error) {
         core.setFailed(error);
       }
