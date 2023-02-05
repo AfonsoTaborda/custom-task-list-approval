@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const timer = require('./timer');
-const createGithubComment = require('./github-comment');
+const {createGithubComment} = require('./github-comment');
 
 async function run() {
     try {

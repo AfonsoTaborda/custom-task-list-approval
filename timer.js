@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const getGithubComment = require('./github-comment');
+const {getGithubComment} = require('./github-comment');
 
 const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
 var isCompleteArr = [];
