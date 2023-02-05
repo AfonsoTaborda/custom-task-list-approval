@@ -1,6 +1,10 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function run() {
     try {
         // This should be a token with access to your repository scoped in as a secret.
@@ -11,8 +15,11 @@ async function run() {
         const userChecklist = core.getInput('checklist-items');
         const title = core.getInput('comment-title');
         const body = core.getInput('comment-body');
+        const timeout = core.getInput('completion-timeout');
 
-        if(!typeof userChecklist === 'string') {
+        const TASK_LIST_ITEM = /(?:^|\n)\s*-\s+\[([ xX])\]\s+(<!--- required -->)/g;
+
+        if (!typeof userChecklist === 'string') {
             core.setFailed("The body input is not of type 'string'!");
         }
 
@@ -35,7 +42,7 @@ async function run() {
 
         // Check if there are similar comments already posted
         var similarCommentsCount = 0;
-        if(pullRequestComments.length != 0) {
+        if (pullRequestComments.length != 0) {
             for (let comment of pullRequestComments) {
                 if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
                     similarCommentsCount++;
@@ -53,18 +60,46 @@ async function run() {
             }
         }
 
-        if(resultComment === "") {
+        if (resultComment === "") {
             throw "The comment to be added is empty!";
         }
 
         // If there are no similar comments, then post the comment
-        if(similarCommentsCount === 0) {
-            await octokit.rest.issues.createComment({
+        if (similarCommentsCount === 0) {
+            const comment = await octokit.rest.issues.createComment({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 issue_number: github.context.issue.number,
                 body: resultComment,
             });
+
+            const commentId = comment.id;
+
+            var sec = timeout * 60;
+            var timer = setInterval(async function(){
+                var comment = await octokit.rest.pulls.getReviewComment({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    comment_id: commentId,
+                });
+
+                var isCompleteArr = [];
+                var checklistItems = [...comment.matchAll(TASK_LIST_ITEM)];
+                for (let item in checklistItems) {
+                    var isComplete = item[1] != " ";
+                    var itemText = item[2];
+
+                    if (isComplete && !isComplete.includes(itemText)) {
+                        isCompleteArr.push(itemText);
+                    }
+                }
+
+                sec--;
+
+                if (sec < 0 || isCompleteArr.length == checklistItems.length) {
+                    clearInterval(timer);
+                }
+            }, 1000);
         }
       } catch (error) {
         core.setFailed(error);

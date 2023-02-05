@@ -12,6 +12,9 @@ inputs:
   checklist-items: # Like checklist item 1;checklist item 2;random item 3;
     description: 'The user-created checklist of items'
     required: true
+  completion-timeout: # In minutes, defines the timeout of the job
+    description: 'Verifies that all checklist items have been completed before the timeout'
+    default: '60'
 runs:
   using: 'node16'
   main: 'index.js'
