@@ -65,7 +65,7 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        var timer = setTimeout(async function(){
+        var timer = setInterval(async function(){
             console.log("Starting the timer...");
             var sec = timeout * 60;
 
