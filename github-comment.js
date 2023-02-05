@@ -1,6 +1,6 @@
 const github = require('@actions/github');
 
-async function createGithubComment(commentBody) {
+async function createGithubComment(octokit, commentBody) {
     console.log("No similar comments found, creating the comment...");
     var { data: comment } = await octokit.rest.issues.createComment({
         owner: github.context.repo.owner,

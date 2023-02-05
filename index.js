@@ -60,7 +60,7 @@ async function run() {
         }
 
         if (!similarCommentId) {
-            var comment = await createGithubComment(resultComment);
+            var comment = await createGithubComment(octokit, resultComment);
             similarCommentId = comment.id;
         }
 
