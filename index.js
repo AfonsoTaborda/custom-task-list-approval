@@ -24,6 +24,10 @@ async function run() {
             resultComment += "# " + title + "\n";
         }
 
+        if (header) {
+            resultComment += "## " + header + "\n";
+        }
+
         if (body) {
             resultComment += body + "\n";
         }
