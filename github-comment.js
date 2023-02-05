@@ -10,16 +10,12 @@ async function getGithubComment(octokit, resultComment, similarCommentId) {
             issue_number: github.context.issue.number,
             body: resultComment,
         });
-
-        console.log(`Created a new checklist comment ${comment.body}`);
     } else {
         var { data: comment } = await octokit.rest.issues.getComment({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
             comment_id: similarCommentId,
         });
-
-        console.log(`Fetched the existing comment ${comment.body}`);
     }
 
     if (!comment) {
