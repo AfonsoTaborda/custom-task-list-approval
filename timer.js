@@ -22,7 +22,7 @@ async function timer(comment, timeout, TASK_LIST_ITEM) {
     }
 
     var isCompleteArr = [];
-    let count = 0;
+    var count = 0;
     printTaskListCompletionStatus(comment.body, count, isCompleteArr, TASK_LIST_ITEM);
 
     console.log("Starting the timer...");
