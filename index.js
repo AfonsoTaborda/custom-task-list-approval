@@ -21,7 +21,7 @@ async function run() {
         var resultComment = "";
 
         if (title) {
-            resultComment += "#" + title + "\n";
+            resultComment += "# " + title + "\n";
         }
 
         if (body) {
