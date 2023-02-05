@@ -42,10 +42,12 @@ async function run() {
 
         // Check if there are similar comments already posted
         var similarCommentsCount = 0;
+        var similarCommentId;
         if (pullRequestComments.length != 0) {
             for (let comment of pullRequestComments) {
                 if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
                     similarCommentsCount++;
+                    similarCommentId = similarCommentId;
                 } else {
                     console.log("A similar comment has been found, skipping posting this one...");
                 }
@@ -64,43 +66,50 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
+        var comment;
         // If there are no similar comments, then post the comment
         if (similarCommentsCount === 0) {
-            const comment = await octokit.rest.issues.createComment({
+            comment = await octokit.rest.issues.createComment({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 issue_number: github.context.issue.number,
                 body: resultComment,
             });
-
-            const commentId = comment.id;
-
-            var sec = timeout * 60;
-            var timer = setInterval(async function(){
-                var comment = await octokit.rest.pulls.getReviewComment({
-                    owner: github.context.repo.owner,
-                    repo: github.context.repo.repo,
-                    comment_id: commentId,
-                });
-
-                var isCompleteArr = [];
-                var checklistItems = [...comment.matchAll(TASK_LIST_ITEM)];
-                for (let item in checklistItems) {
-                    var isComplete = item[1] != " ";
-                    var itemText = item[2];
-
-                    if (isComplete && !isComplete.includes(itemText)) {
-                        isCompleteArr.push(itemText);
-                    }
-                }
-
-                sec--;
-
-                if (sec < 0 || isCompleteArr.length == checklistItems.length) {
-                    clearInterval(timer);
-                }
-            }, 1000);
+        } else {
+            comment = await octokit.rest.pulls.getReviewComment({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                comment_id: similarCommentId,
+            });
         }
+
+        const commentId = comment.id;
+
+        var sec = timeout * 60;
+        var timer = setInterval(async function(){
+            var comment = await octokit.rest.pulls.getReviewComment({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                comment_id: commentId,
+            });
+
+            var isCompleteArr = [];
+            var checklistItems = [...comment.matchAll(TASK_LIST_ITEM)];
+            for (let item in checklistItems) {
+                var isComplete = item[1] != " ";
+                var itemText = item[2];
+
+                if (isComplete && !isComplete.includes(itemText)) {
+                    isCompleteArr.push(itemText);
+                }
+            }
+
+            sec--;
+
+            if (sec < 0 || isCompleteArr.length == checklistItems.length) {
+                clearInterval(timer);
+            }
+        }, 1000);
       } catch (error) {
         core.setFailed(error);
       }
