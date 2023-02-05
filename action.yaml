@@ -1,13 +1,23 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Custom Checklist Approval'
+author: 'Afonso Tomás Taborda'
+description: 'Create a checklist'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  token:
+    description: 'The Github access token'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  comment-title:
+    description: 'The title to be added into the comment'
+  comment-body:
+    description: 'The body of text that comes befores the checklist items'
+  checklist-items: # Like checklist item 1;checklist item 2;random item 3;
+    description: 'The user-created checklist of items'
+    required: true
+  completion-timeout: # In minutes, defines the timeout of the job
+    description: 'Verifies that all checklist items have been completed before the timeout'
+    default: '60'
+  delete-comment-after-completion: # Boolean
+    description: 'If set to true, it deletes the task list comment after completion of the job'
+    default: 'true'
 runs:
   using: 'node16'
   main: 'index.js'
