@@ -48,8 +48,7 @@ async function run() {
                 if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
                     similarCommentsCount++;
                     similarCommentId = comment.id;
-                } else {
-                    console.log("A similar comment has been found, skipping posting this one...");
+                    console.log(`A similar comment has been found with id: ${similarCommentId}`);
                 }
             }
         }
@@ -86,8 +85,6 @@ async function run() {
                     repo: github.context.repo.repo,
                     comment_id: similarCommentId,
                 });
-
-                console.log(`A similar comment has been found with id: ${comment.data.id}`);
             }
 
             if (!comment) {
