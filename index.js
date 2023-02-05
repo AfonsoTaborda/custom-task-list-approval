@@ -66,31 +66,30 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        var comment;
-        // If there are no similar comments, then post the comment
-        if (similarCommentsCount === 0) {
-            comment = await octokit.rest.issues.createComment({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                issue_number: github.context.issue.number,
-                body: resultComment,
-            });
-        } else {
-            comment = await octokit.rest.issues.getComment({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                comment_id: similarCommentId,
-            });
-        }
-
-        if (!comment) {
-            throw "The source comment could not be fetched";
-        }
-
         var sec = timeout * 60;
         var timer = setInterval(async function(){
+            var comment;
+            // If there are no similar comments, then post the comment
+            if (similarCommentsCount === 0) {
+                comment = await octokit.rest.issues.createComment({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    issue_number: github.context.issue.number,
+                    body: resultComment,
+                });
+            } else {
+                comment = await octokit.rest.issues.getComment({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    comment_id: similarCommentId,
+                });
+            }
+
+            if (!comment) {
+                throw "The source comment could not be fetched";
+            }
             var isCompleteArr = [];
-            var checklistItems = [...comment.data.body.matchAll(TASK_LIST_ITEM)];
+            var checklistItems = [comment.data.body.matchAll(TASK_LIST_ITEM)];
             for (let item in checklistItems) {
                 var isComplete = item[1] != " ";
                 var itemText = item[2];
