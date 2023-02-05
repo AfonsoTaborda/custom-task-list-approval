@@ -1,4 +1,5 @@
 const github = require('@actions/github');
+const pause = require('./pauser');
 
 async function createGithubComment(octokit, commentBody) {
     console.log("No similar comments found, creating the comment...");
@@ -18,6 +19,10 @@ async function getGithubComment(octokit, commentId) {
 
     while (retryCount < maxRetries) {
         try {
+            if(retryCount > 0) {
+                pause(2000);
+            }
+
             // If there are no similar comments, then post the comment
             var { data: comment } = await octokit.rest.issues.getComment({
                 owner: github.context.repo.owner,
