@@ -83,7 +83,7 @@ async function run() {
             });
         }
 
-        const commentId = comment.id;
+        const commentId = comment.data.id;
 
         var sec = timeout * 60;
         var timer = setInterval(async function(){
