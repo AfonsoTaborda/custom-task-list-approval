@@ -17,7 +17,7 @@ async function run() {
         const body = core.getInput('comment-body');
         const timeout = parseInt(core.getInput('completion-timeout'));
 
-        const TASK_LIST_ITEM = /\s*\[(x|X)\]\s*(.*)/g;
+        const TASK_LIST_ITEM = /\s*\[(.*?)\]\s*(.*)/g;
 
         if (!typeof userChecklist === 'string') {
             core.setFailed("The body input is not of type 'string'!");
@@ -96,28 +96,25 @@ async function run() {
 
             var isCompleteArr = [];
             let count = 0;
-            for (let item of comment.body.split("\n")) {
-                let matches = item.matchAll(TASK_LIST_ITEM);
-                for (let match of matches) {
-                    var isComplete = match[1] != " ";
-                    var itemText = match[2];
+            for (let item of TASK_LIST_ITEM.exec(comment.body)) {
+                var isComplete = item[1] != " ";
+                var itemText = item[2];
 
-                    console.log(`Found the following checklist items: ${item}`);
+                console.log(`Found the following checklist items: ${item}`);
 
-                    count++;
+                count++;
 
-                    if (isComplete && !isCompleteArr.includes(itemText)) {
-                        isCompleteArr.push(itemText);
-                        console.log(`${itemText} is complete ✅`);
-                    } else {
-                        console.log(`${itemText} has not been completed yet ❌`);
-                    }
+                if (isComplete && !isCompleteArr.includes(itemText)) {
+                    isCompleteArr.push(itemText);
+                    console.log(`${itemText} is complete ✅`);
+                } else {
+                    console.log(`${itemText} has not been completed yet ❌`);
                 }
             }
 
             sec--;
 
-            if (sec < 0 || isCompleteArr.length == count && count != 0) {
+            if (sec < 0 || isCompleteArr.length == count) {
                 console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
                 clearInterval(timer);
             }
