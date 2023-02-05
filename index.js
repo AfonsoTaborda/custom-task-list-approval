@@ -37,7 +37,7 @@ async function run() {
         var similarCommentsCount = 0;
         if(pullRequestComments.length != 0) {
             for (let comment of pullRequestComments) {
-                if(comment.body.includes(title) && comment.body.includes(header) || comment.body.includes(userChecklist.split(";"))) {
+                if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
                     similarCommentsCount++;
                 } else {
                     console.log("A similar comment has been found, skipping posting this one...");
