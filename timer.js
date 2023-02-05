@@ -5,9 +5,9 @@ const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
 var isCompleteArr = [];
 
 async function updateTaskListCompletion(octokit, commentId) {
-    const commentBody = (await getGithubComment(octokit, commentId)).body;
+    var commentBody = await getGithubComment(octokit, commentId);
 
-    while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
+    while ((match = TASK_LIST_ITEM.exec(commentBody.body)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
 
@@ -19,9 +19,9 @@ async function updateTaskListCompletion(octokit, commentId) {
 
 async function printTaskListCompletionStatus(octokit, commentId) {
     var count = 0;
-    const commentBody = (await getGithubComment(octokit, commentId)).body;
+    const commentBody = await getGithubComment(octokit, commentId);
 
-    while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
+    while ((match = TASK_LIST_ITEM.exec(commentBody.body)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
 

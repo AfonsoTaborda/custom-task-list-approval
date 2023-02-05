@@ -24,7 +24,7 @@ async function getGithubComment(octokit, commentId) {
         throw "The source comment could not be fetched";
     }
 
-    return comment;
+    return comment.body;
 }
 
 module.exports = getGithubComment;
