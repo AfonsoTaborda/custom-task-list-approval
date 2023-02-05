@@ -1,6 +1,6 @@
 const github = require('@actions/github');
 
-module.exports.timer = async function (timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM) {
+module.exports.timer = async function (timerId, timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM) {
     console.log("Starting the timer...");
     var sec = timeout * 60;
 
@@ -49,6 +49,6 @@ module.exports.timer = async function (timeout, similarCommentsCount, similarCom
 
     if (sec < 0 || isCompleteArr.length == count && count != 0) {
         console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
-        clearInterval(timer);
+        clearInterval(timerId);
     }
 }

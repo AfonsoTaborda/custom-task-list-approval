@@ -2,10 +2,6 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const timer = require('./timer');
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 async function run() {
     try {
         // This should be a token with access to your repository scoped in as a secret.
@@ -66,7 +62,7 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        setInterval(timer.timer(timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM), 1000);
+        var timerId = setInterval(timer.timer(timerId, timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM), 1000);
       } catch (error) {
         core.setFailed(error);
       }
