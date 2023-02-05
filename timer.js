@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const getGithubComment = require('./github-comment');
 
+const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
 var isCompleteArr = [];
 var count = 0;
 
@@ -34,7 +35,7 @@ async function printTaskListCompletionStatus(octokit, resultComment, similarComm
     }
 }
 
-async function timer(timeout, octokit, similarCommentId, resultComment, TASK_LIST_ITEM) {
+async function timer(timeout, octokit, similarCommentId, resultComment) {
     await printTaskListCompletionStatus(octokit, resultComment, similarCommentId, TASK_LIST_ITEM);
 
     console.log("Starting the timer...");
