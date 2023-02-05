@@ -49,7 +49,9 @@ async function run() {
         // Loop through the user added checklist items,
         // And append them into the resulting comment
         for (let item of userChecklist.split(";")) {
-            resultComment += "- [ ] " + item + "\n";
+            if(item) {
+                resultComment += "- [ ] " + item + "\n";
+            }
         }
 
         if(resultComment === "") {
