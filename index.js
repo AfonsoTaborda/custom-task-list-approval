@@ -94,7 +94,7 @@ async function run() {
                 var isComplete = item[1] != " ";
                 var itemText = item[2];
 
-                if (isComplete && !isComplete.includes(itemText)) {
+                if (isComplete && !isCompleteArr.includes(itemText)) {
                     isCompleteArr.push(itemText);
                 }
             }
