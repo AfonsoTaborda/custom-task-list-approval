@@ -2,7 +2,7 @@ const github = require('@actions/github');
 
 async function getGithubComment(octokit, resultComment, similarCommentId) {
     // If there are no similar comments, then post the comment
-    if (similarCommentId) {
+    if (!similarCommentId) {
         console.log("No similar comments found, creating the comment...");
         var { data: comment } = await octokit.rest.issues.createComment({
             owner: github.context.repo.owner,
