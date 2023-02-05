@@ -52,19 +52,6 @@ async function createGithubComment(octokit, commentBody) {
 }
 
 async function getGithubComment(octokit, commentId) {
-    const { data: pullRequestComments } = await octokit.rest.issues.listComments({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        issue_number: github.context.issue.number,
-    });
-
-    for (let comment of pullRequestComments) {
-        while(comment.id != commentId) {
-            console.log("Found the comment!");
-            await pause(2000);
-        }
-    }
-
     // If there are no similar comments, then post the comment
     var { data: comment } = await octokit.rest.issues.getComment({
         owner: github.context.repo.owner,
