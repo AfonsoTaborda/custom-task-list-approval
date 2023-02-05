@@ -17,7 +17,7 @@ async function run() {
         const body = core.getInput('comment-body');
         const timeout = parseInt(core.getInput('completion-timeout'));
 
-        const TASK_LIST_ITEM = /- \[ \] (.*)\n/g;
+        const TASK_LIST_ITEM = /\[ \x5Bx\x5D\]|\[ \x5BX\x5D\]|\[ \x5B \x5D\].*/g;
 
         if (!typeof userChecklist === 'string') {
             core.setFailed("The body input is not of type 'string'!");
