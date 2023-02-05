@@ -100,8 +100,6 @@ async function run() {
                 var isComplete = match[1] != " ";
                 var itemText = match[2];
 
-                console.log(`Found the following checklist items: ${match}`);
-
                 count++;
 
                 if (isComplete && !isCompleteArr.includes(itemText)) {
