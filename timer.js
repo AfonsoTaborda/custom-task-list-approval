@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const {getGithubComment,deleteGithubComment} = require('./github-comment');
-const {pause} = require('./pauser');
+const pause = require('./pauser');
 
 let isCompleteArr = [];
 
