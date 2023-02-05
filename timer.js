@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 
-function printTaskListCompletionStatus(commentBody, count, isCompleteArr, TASK_LIST_ITEM) {
+function updateTaskListCompletion(commentBody, count, isCompleteArr, TASK_LIST_ITEM) {
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
@@ -9,6 +9,16 @@ function printTaskListCompletionStatus(commentBody, count, isCompleteArr, TASK_L
 
         if (isComplete && !isCompleteArr.includes(itemText)) {
             isCompleteArr.push(itemText);
+        }
+    }
+}
+
+function printTaskListCompletionStatus(commentBody, isCompleteArr, TASK_LIST_ITEM) {
+    while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
+        var isComplete = match[1] != " ";
+        var itemText = match[2];
+
+        if (isComplete && !isCompleteArr.includes(itemText)) {
             console.log(`${itemText} is complete ✅`);
         } else {
             console.log(`${itemText} has not been completed yet ❌`);
@@ -23,16 +33,14 @@ async function timer(comment, timeout, TASK_LIST_ITEM) {
 
     var isCompleteArr = [];
     var count = 0;
-    printTaskListCompletionStatus(comment.body, count, isCompleteArr, TASK_LIST_ITEM);
+    printTaskListCompletionStatus(comment.body, isCompleteArr, TASK_LIST_ITEM);
 
     console.log("Starting the timer...");
     var sec = timeout * 60;
     var interval = setInterval(async function() {
         console.log(`You have ${sec} seconds left and ${isCompleteArr.length} tasks currently completed`);
 
-        if (isComplete && !isCompleteArr.includes(itemText)) {
-            isCompleteArr.push(itemText);
-        }
+        updateTaskListCompletion(comment.body, count, isCompleteArr, TASK_LIST_ITEM);
 
         sec--;
 
