@@ -95,9 +95,8 @@ async function run() {
             }
 
             var isCompleteArr = [];
-            var checklistItems = TASK_LIST_ITEM.exec(comment.body);
             let count = 0;
-            while ((item = TASK_LIST_ITEM.exec(comment.body))) {
+            for (let item of comment.body.match(TASK_LIST_ITEM)) {
                 var isComplete = item[1] != " ";
                 var itemText = item[2];
 
