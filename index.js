@@ -67,11 +67,13 @@ async function run() {
         }
 
         var timer = setTimeout(async function(){
+            console.log("Starting the timer...");
             var sec = timeout * 60;
             var comment;
 
             // If there are no similar comments, then post the comment
             if (similarCommentsCount === 0) {
+                console.log("No similar comments found, creating the comment...");
                 comment = await octokit.rest.issues.createComment({
                     owner: github.context.repo.owner,
                     repo: github.context.repo.repo,
@@ -79,6 +81,7 @@ async function run() {
                     body: resultComment,
                 });
             } else {
+                console.log("A similar comment has been found, getting a reference to it...");
                 comment = await octokit.rest.issues.getComment({
                     owner: github.context.repo.owner,
                     repo: github.context.repo.repo,
