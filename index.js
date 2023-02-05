@@ -64,7 +64,7 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        timer(timeout, octokit);
+        timer(timeout, octokit, similarCommentId);
       } catch (error) {
         core.setFailed(error);
       }
