@@ -1,11 +1,5 @@
 function pause(ms) {
-    const pauseInterval = setInterval(() => {
-        console.log("Waiting for the comment to be initially created...");
-    }, ms);
-
-    setTimeout(() => {
-        clearInterval(pauseInterval);
-    }, ms);
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports = pause;
