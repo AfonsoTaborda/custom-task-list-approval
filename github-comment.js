@@ -1,6 +1,7 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 const inputs = require('./inputs');
+const pause = require('./pauser');
 
 async function initializeComment() {
     if (!typeof inputs.userChecklist === 'string') {
@@ -58,9 +59,9 @@ async function getGithubComment(octokit, commentId) {
     });
 
     for (let comment of pullRequestComments) {
-        if(comment.id == commentId) {
+        while(comment.id == commentId) {
             console.log("Found the comment!");
-            break;
+            await pause(2000);
         }
     }
 
