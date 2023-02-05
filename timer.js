@@ -44,8 +44,8 @@ async function timer(timeout, octokit, commentId, TASK_LIST_ITEM) {
     var sec = timeout * 60;
     var interval = setInterval(async function() {
         var isCompleteArr = await updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM);
-        
-        console.log(`You have ${sec} seconds and ${isCompleteArr.length} tasks left to complete`);
+
+        console.log(`You have ${sec} seconds and ${isCompleteArr.length} tasks completed`);
 
         sec--;
 
