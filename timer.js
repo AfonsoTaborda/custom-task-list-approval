@@ -22,7 +22,7 @@ async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
 async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, TASK_LIST_ITEM) {
     var count = 0;
 
-    pause(4000);
+    pause(10000);
 
     const commentBody = await getGithubComment(octokit, commentId);
 
