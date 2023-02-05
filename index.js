@@ -61,9 +61,10 @@ async function run() {
 
         if (!similarCommentId) {
             var comment = await createGithubComment(resultComment);
+            similarCommentId = comment.id;
         }
 
-        timer(timeout, octokit, similarCommentId, resultComment);
+        timer(timeout, octokit);
       } catch (error) {
         core.setFailed(error);
       }

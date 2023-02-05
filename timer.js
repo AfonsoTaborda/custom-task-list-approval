@@ -4,8 +4,8 @@ const getGithubComment = require('./github-comment');
 const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
 var isCompleteArr = [];
 
-async function updateTaskListCompletion(octokit, resultComment, similarCommentId) {
-    const commentBody = await getGithubComment(octokit, resultComment, similarCommentId);
+async function updateTaskListCompletion(octokit, commentId) {
+    const commentBody = await getGithubComment(octokit, commentId);
 
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
@@ -17,9 +17,9 @@ async function updateTaskListCompletion(octokit, resultComment, similarCommentId
     }
 }
 
-async function printTaskListCompletionStatus(octokit, resultComment, similarCommentId) {
+async function printTaskListCompletionStatus(octokit, commentId) {
     var count = 0;
-    const commentBody = await getGithubComment(octokit, resultComment, similarCommentId);
+    const commentBody = await getGithubComment(octokit, commentId);
 
     while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
@@ -37,15 +37,15 @@ async function printTaskListCompletionStatus(octokit, resultComment, similarComm
     return count;
 }
 
-async function timer(timeout, octokit, similarCommentId, resultComment) {
-    const count = await printTaskListCompletionStatus(octokit, resultComment, similarCommentId);
+async function timer(timeout, octokit, commentId, resultComment) {
+    const count = await printTaskListCompletionStatus(octokit, resultComment, commentId);
 
     console.log("Starting the timer...");
     var sec = timeout * 60;
     var interval = setInterval(async function() {
         console.log(`You have ${sec} seconds left and ${isCompleteArr.length} tasks currently completed`);
 
-        await updateTaskListCompletion(octokit, resultComment, similarCommentId);
+        await updateTaskListCompletion(octokit, resultComment, commentId);
 
         sec--;
 
@@ -53,7 +53,7 @@ async function timer(timeout, octokit, similarCommentId, resultComment) {
             if(isCompleteArr.length != count) {
                 core.setFailed("The timer has ended and not all the tasks have been completed, failing the workflow...");
             }
-            
+
             console.log(`Clearing the timeout with sec = ${sec} and isCompleteArr.length = ${isCompleteArr.length}`);
             clearInterval(interval);
         }
