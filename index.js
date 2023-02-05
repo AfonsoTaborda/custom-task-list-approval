@@ -86,9 +86,9 @@ async function run() {
                     repo: github.context.repo.repo,
                     comment_id: similarCommentId,
                 });
-
-                console.log(`Fetched the existing comment ${comment.body}`);
             }
+
+            console.log(`Fetched the existing comment ${comment.body}`);
 
             if (!comment) {
                 throw "The source comment could not be fetched";
