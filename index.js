@@ -66,9 +66,10 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        var sec = timeout * 60;
         var timer = setInterval(async function(){
+            var sec = timeout * 60;
             var comment;
+
             // If there are no similar comments, then post the comment
             if (similarCommentsCount === 0) {
                 comment = await octokit.rest.issues.createComment({
