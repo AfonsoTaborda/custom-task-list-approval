@@ -18,7 +18,7 @@ async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
     return completedTasksArr;
 }
 
-async function printInitialCompletionStatus(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX) {
+async function getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX) {
     var count = 0;
 
     const commentBody = await getGithubComment(octokit, commentId);
@@ -40,7 +40,7 @@ async function printInitialCompletionStatus(completedTasksArr, octokit, commentI
 }
 
 async function runTimer(timeout, octokit, commentId, CHECK_LIST_REGEX) {
-    const count = await printInitialCompletionStatus(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX);
+    const count = await getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX);
     var completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
     console.log(`Found ${count} tasks to complete, starting the timer...`);
