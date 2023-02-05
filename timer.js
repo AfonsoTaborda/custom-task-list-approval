@@ -20,7 +20,7 @@ async function timer(timeout, similarCommentsCount, similarCommentId, resultComm
     // If there are no similar comments, then post the comment
     if (similarCommentsCount === 0) {
         console.log("No similar comments found, creating the comment...");
-        const { data: comment } = await octokit.rest.issues.createComment({
+        var { data: comment } = await octokit.rest.issues.createComment({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
             issue_number: github.context.issue.number,
@@ -29,7 +29,7 @@ async function timer(timeout, similarCommentsCount, similarCommentId, resultComm
 
         console.log(`Created a new checklist comment ${comment.body}`);
     } else {
-        const { data: comment } = await octokit.rest.issues.getComment({
+        var { data: comment } = await octokit.rest.issues.getComment({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
             comment_id: similarCommentId,
