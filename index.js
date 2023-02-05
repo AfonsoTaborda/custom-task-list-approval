@@ -15,7 +15,7 @@ async function run() {
         const userChecklist = core.getInput('checklist-items');
         const title = core.getInput('comment-title');
         const body = core.getInput('comment-body');
-        const timeout = core.getInput('completion-timeout');
+        const timeout = parseInt(core.getInput('completion-timeout'));
 
         const TASK_LIST_ITEM = /(?:^|\n)\s*-\s+\[([ xX])\]\s+(<!--- required -->)/g;
 
@@ -65,7 +65,7 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        setTimeout(async function(){
+        var timer = setTimeout(async function(){
             console.log("Starting the timer...");
             var sec = timeout * 60;
             var comment;
