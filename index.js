@@ -68,7 +68,7 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        await pause(4000);
+        await pause(15000);
 
         runTimer(timeout, octokit, similarCommentId, CHECK_LIST_REGEX);
       } catch (error) {
