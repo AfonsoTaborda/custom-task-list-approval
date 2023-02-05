@@ -4,7 +4,7 @@ const runTimer = require('./timer');
 const {createGithubComment} = require('./github-comment');
 const pause = require('./pauser');
 
-const TASK_LIST_ITEM = /\[(x|X|\s)\](.*)/g;
+const CHECK_LIST_REGEX = /\[(x|X|\s)\](.*)/g;
 
 async function run() {
     try {
@@ -70,7 +70,7 @@ async function run() {
 
         await pause(4000);
 
-        runTimer(timeout, octokit, similarCommentId, TASK_LIST_ITEM);
+        runTimer(timeout, octokit, similarCommentId, CHECK_LIST_REGEX);
       } catch (error) {
         core.setFailed(error);
       }

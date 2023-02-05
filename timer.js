@@ -3,10 +3,10 @@ const {getGithubComment,deleteGithubComment} = require('./github-comment');
 
 let isCompleteArr = [];
 
-async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
+async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
     var commentBody = await getGithubComment(octokit, commentId);
 
-    while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
+    while ((match = CHECK_LIST_REGEX.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
 
@@ -18,12 +18,12 @@ async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
     return isCompleteArr;
 }
 
-async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, TASK_LIST_ITEM) {
+async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, CHECK_LIST_REGEX) {
     var count = 0;
 
     const commentBody = await getGithubComment(octokit, commentId);
 
-    while ((match = TASK_LIST_ITEM.exec(commentBody)) !== null) {
+    while ((match = CHECK_LIST_REGEX.exec(commentBody)) !== null) {
         var isComplete = match[1] != " ";
         var itemText = match[2];
 
@@ -39,14 +39,14 @@ async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, 
     return count;
 }
 
-async function runTimer(timeout, octokit, commentId, TASK_LIST_ITEM) {
-    const count = await printTaskListCompletionStatus(isCompleteArr, octokit, commentId, TASK_LIST_ITEM);
-    var isCompleteArr = await updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM);
+async function runTimer(timeout, octokit, commentId, CHECK_LIST_REGEX) {
+    const count = await printTaskListCompletionStatus(isCompleteArr, octokit, commentId, CHECK_LIST_REGEX);
+    var isCompleteArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
     console.log(`Found ${count} tasks to complete, starting the timer...`);
     var sec = timeout * 60;
     var interval = setInterval(async function() {
-        isCompleteArr = await updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM);
+        isCompleteArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
         console.log(`You have ${sec} seconds and ${isCompleteArr.length} tasks completed`);
 
