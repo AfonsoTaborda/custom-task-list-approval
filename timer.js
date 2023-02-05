@@ -30,6 +30,10 @@ async function timer(comment, timeout, TASK_LIST_ITEM) {
     var interval = setInterval(async function() {
         console.log(`You have ${sec} seconds left and ${isCompleteArr.length} tasks currently completed`);
 
+        if (isComplete && !isCompleteArr.includes(itemText)) {
+            isCompleteArr.push(itemText);
+        }
+
         sec--;
 
         if (sec < 0 || isCompleteArr.length == count && count != 0) {
