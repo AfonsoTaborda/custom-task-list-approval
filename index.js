@@ -20,6 +20,7 @@ async function run() {
         }
 
         const octokit = github.getOctokit(myToken);
+        
         var resultComment = "";
 
         if (title) {
@@ -59,10 +60,14 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
+        console.log(`The comment ID is: ${similarCommentId}`);
+
         if (!similarCommentId) {
             var comment = await createGithubComment(octokit, resultComment);
             similarCommentId = comment.id;
         }
+        
+        console.log(`The comment ID is: ${similarCommentId}`);
 
         timer(timeout, octokit, similarCommentId);
       } catch (error) {
