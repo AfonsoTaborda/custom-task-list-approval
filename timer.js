@@ -18,7 +18,7 @@ async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
             const index = completedTasksArr.indexOf(itemText);
 
             if (index > -1) {
-                array.splice(index, 1);
+                completedTasksArr.splice(index, 1);
             }
         }
     }
