@@ -21,8 +21,9 @@ async function updateTaskListCompletion(octokit, commentId, TASK_LIST_ITEM) {
 async function printTaskListCompletionStatus(isCompleteArr, octokit, commentId, TASK_LIST_ITEM) {
     var count = 0;
 
-    setInterval(() => {
+    const pause = setInterval(() => {
         console.log("Waiting for the comment to be initially created...");
+        clearInterval(pause);
     }, 4000);
 
     const commentBody = await getGithubComment(octokit, commentId);
