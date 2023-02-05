@@ -1,7 +1,6 @@
 const github = require('@actions/github');
 const core = require('@actions/core');
 const inputs = require('./inputs');
-const pause = require('./pauser');
 
 async function initializeComment() {
     if (!typeof inputs.userChecklist === 'string') {
