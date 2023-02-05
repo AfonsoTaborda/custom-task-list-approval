@@ -62,7 +62,28 @@ async function run() {
             throw "The comment to be added is empty!";
         }
 
-        timer(timeout, similarCommentsCount, similarCommentId, resultComment, octokit, TASK_LIST_ITEM);
+        // If there are no similar comments, then post the comment
+        if (similarCommentsCount === 0) {
+            console.log("No similar comments found, creating the comment...");
+            var { data: comment } = await octokit.rest.issues.createComment({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                issue_number: github.context.issue.number,
+                body: resultComment,
+            });
+
+            console.log(`Created a new checklist comment ${comment.body}`);
+        } else {
+            var { data: comment } = await octokit.rest.issues.getComment({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                comment_id: similarCommentId,
+            });
+
+            console.log(`Fetched the existing comment ${comment.body}`);
+        }
+
+        timer(comment, timeout, TASK_LIST_ITEM);
       } catch (error) {
         core.setFailed(error);
       }
