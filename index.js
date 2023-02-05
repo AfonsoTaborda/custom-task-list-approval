@@ -97,7 +97,7 @@ async function run() {
             var isCompleteArr = [];
             var checklistItems = TASK_LIST_ITEM.exec(comment.body);
             console.log(`Found the following checklist items: ${checklistItems}`);
-            for (let item of checklistItems) {
+            while ((item = TASK_LIST_ITEM.exec(comment.body))) {
                 var isComplete = item[1] != " ";
                 var itemText = item[2];
 
