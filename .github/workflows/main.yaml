@@ -25,4 +25,4 @@ jobs:
           run-with-timer: false # Optional, defaults to true if not set
           completion-timeout: 1 # Optional, only valid if `run-with-timer` is set to true
           delete-comment-after-completion: false # Optional
-          verbose: true # Optional
+          verbose: true # Optional, control's the logging verbose setting for the timer (if enabled)

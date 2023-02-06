@@ -50,8 +50,8 @@ async function getTaskListCount(completedTasksArr, octokit, commentId) {
 }
 
 async function runTimer(octokit, commentId) {
-    const count = await getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX);
     var completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
+    const count = await getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX);
 
     if(inputs.runTimer) {
         console.log(`Found ${count} tasks to complete, starting the timer...`);
