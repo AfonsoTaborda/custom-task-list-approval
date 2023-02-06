@@ -59,16 +59,6 @@ async function getGithubComment(octokit, commentId) {
     return comment.body;
 }
 
-async function listGithubComments(octokit) {
-    const { data: pullRequestComments } = await octokit.rest.issues.listComments({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        issue_number: github.context.issue.number,
-    });
-
-    return pullRequestComments;
-}
-
 function getSimilarGithubCommentId(pullRequestComments, title, body, userChecklist) {
     // Check if there are similar comments already posted
     var similarCommentId;
@@ -82,6 +72,16 @@ function getSimilarGithubCommentId(pullRequestComments, title, body, userCheckli
     }
 
     return similarCommentId;
+}
+
+async function listGithubComments(octokit) {
+    const { data: pullRequestComments } = await octokit.rest.issues.listComments({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        issue_number: github.context.issue.number,
+    });
+
+    return pullRequestComments;
 }
 
 async function deleteGithubComment(octokit, commentId) {

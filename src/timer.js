@@ -56,7 +56,9 @@ async function runTimer(timeout, octokit, commentId) {
     console.log(`Found ${count} tasks to complete, starting the timer...`);
     var sec = timeout * 60;
     var interval = setInterval(async function() {
-        completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
+        setTimeout(async () => {
+            completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
+        }, 1000);
 
         if(inputs.verbose) {
             console.log(`You have ${sec} seconds and ${completedTasksArr.length} tasks completed`);
