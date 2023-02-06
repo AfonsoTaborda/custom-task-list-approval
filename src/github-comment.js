@@ -19,12 +19,6 @@ async function initializeComment() {
         resultComment += inputs.body + "\n";
     }
 
-    const { data: pullRequestComments } = await octokit.rest.issues.listComments({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        issue_number: github.context.issue.number,
-    });
-
     // Loop through the user added checklist items,
     // And append them into the resulting comment
     for (let item of inputs.userChecklist.split(";")) {
@@ -35,7 +29,7 @@ async function initializeComment() {
 
     console.log("Finished initializing the comment variables");
 
-    return [octokit, inputs.timeout, pullRequestComments, resultComment, inputs.userChecklist, inputs.title, inputs.body];
+    return [octokit, inputs.timeout, resultComment, inputs.userChecklist, inputs.title, inputs.body];
 }
 
 async function createGithubComment(octokit, commentBody) {
@@ -47,7 +41,7 @@ async function createGithubComment(octokit, commentBody) {
         body: commentBody,
     });
 
-    return comment.body;
+    return comment;
 }
 
 async function getGithubComment(octokit, commentId) {
@@ -65,6 +59,31 @@ async function getGithubComment(octokit, commentId) {
     return comment.body;
 }
 
+async function listGithubComments(octokit) {
+    const { data: pullRequestComments } = await octokit.rest.issues.listComments({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        issue_number: github.context.issue.number,
+    });
+
+    return pullRequestComments;
+}
+
+function getSimilarGithubCommentId(pullRequestComments, title, body, userChecklist) {
+    // Check if there are similar comments already posted
+    var similarCommentId;
+    if (pullRequestComments.length != 0) {
+        for (let comment of pullRequestComments) {
+            if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
+                similarCommentId = comment.id;
+                console.log(`A similar comment has been found with id: ${similarCommentId}`);
+            }
+        }
+    }
+
+    return similarCommentId;
+}
+
 async function deleteGithubComment(octokit, commentId) {
     if(inputs.deleteCommentAfterCompletion) {
         await octokit.rest.issues.deleteComment({
@@ -77,7 +96,9 @@ async function deleteGithubComment(octokit, commentId) {
 
 module.exports = {
     initializeComment,
-    getGithubComment,
     createGithubComment,
+    getGithubComment,
+    getSimilarGithubCommentId,
+    listGithubComments,
     deleteGithubComment,
 };

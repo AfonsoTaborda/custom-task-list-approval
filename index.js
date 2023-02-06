@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const runTimer = require('./src/timer');
-const {createGithubComment, getGithubComment, initializeComment} = require('./src/github-comment');
+const {createGithubComment, getGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId} = require('./src/github-comment');
 const pause = require('./src/pauser');
 
 async function run() {
@@ -9,18 +9,13 @@ async function run() {
         // The YML workflow will need to set myToken with the GitHub Secret Token
         // myToken: ${{ secrets.GITHUB_TOKEN }}
         // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-        var [octokit, timeout, pullRequestComments, resultComment, userChecklist, title, body] = await initializeComment();
+        var [octokit, timeout, resultComment, userChecklist, title, body] = await initializeComment();
+
+        var pullRequestComments = await listGithubComments(octokit);
 
         // Check if there are similar comments already posted
-        var similarCommentId;
-        if (pullRequestComments.length != 0) {
-            for (let comment of pullRequestComments) {
-                if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
-                    similarCommentId = comment.id;
-                    console.log(`A similar comment has been found with id: ${similarCommentId}`);
-                }
-            }
-        }
+        // Otherwise `similarCommentId` will be `undefined`
+        var similarCommentId = getSimilarGithubCommentId(pullRequestComments, title, body, userChecklist);
 
         if (resultComment === "") {
             throw "The comment to be added is empty!";
@@ -30,7 +25,11 @@ async function run() {
             var comment = await createGithubComment(octokit, resultComment);
             similarCommentId = comment.id;
 
-            console.log(`Found commentId: ${similarCommentId}`);
+            /*while(typeof similarCommentId === "undefined") {
+                var pullRequestComments = await listGithubComments(octokit);
+                var similarCommentId = getSimilarGithubCommentId(pullRequestComments, title, body, userChecklist);
+                var comment = await getGithubComment(octokit, similarCommentId);
+            }*/
         }
 
         runTimer(timeout, octokit, similarCommentId);
