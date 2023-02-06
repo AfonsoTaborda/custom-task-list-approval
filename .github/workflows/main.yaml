@@ -18,7 +18,6 @@ jobs:
       
       - name: Install dependencies
         run: npm install
-        working-directory: ./src
 
       - name: Custom Checklist Approval
         uses: ./src
