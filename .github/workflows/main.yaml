@@ -24,4 +24,4 @@ jobs:
           comment-body: "Please finish the TODO list below before moving to the next step:" # Optional
           completion-timeout: 1 # Optional
           delete-comment-after-completion: false # Optional
-          verbose: true # Optional
+          verbose: false # Optional

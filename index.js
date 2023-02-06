@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const runTimer = require('./src/timer');
-const {createGithubComment, initializeComment} = require('./src/github-comment');
+const {createGithubComment, getGithubComment, initializeComment} = require('./src/github-comment');
+const pause = require('./src/pauser');
 
 async function run() {
     try {
@@ -28,6 +29,8 @@ async function run() {
         if (typeof similarCommentId === "undefined") {
             var comment = await createGithubComment(octokit, resultComment);
             similarCommentId = comment.id;
+
+            console.log(`Found commentId: ${similarCommentId}`);
         }
 
         runTimer(timeout, octokit, similarCommentId);
