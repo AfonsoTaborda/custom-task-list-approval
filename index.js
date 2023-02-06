@@ -2,8 +2,6 @@ const core = require('@actions/core');
 const runTimer = require('./src/timer');
 const {createGithubComment, initializeComment} = require('./src/github-comment');
 
-const CHECK_LIST_REGEX = /\[(x|X|\s)\](.*)/g;
-
 async function run() {
     try {
         // This should be a token with access to your repository scoped in as a secret.
@@ -32,7 +30,7 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        runTimer(timeout, octokit, similarCommentId, CHECK_LIST_REGEX);
+        runTimer(timeout, octokit, similarCommentId);
       } catch (error) {
         core.setFailed(error);
       }

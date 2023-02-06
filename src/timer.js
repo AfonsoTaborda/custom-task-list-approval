@@ -1,9 +1,10 @@
 const core = require('@actions/core');
 const {getGithubComment,deleteGithubComment} = require('./github-comment');
 
+const CHECK_LIST_REGEX = /\[(x|X|\s)\](.*)/g;
 let completedTasksArr = [];
 
-async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
+async function updateTaskListCompletion(octokit, commentId) {
     var commentBody = await getGithubComment(octokit, commentId);
 
     while ((match = CHECK_LIST_REGEX.exec(commentBody)) !== null) {
@@ -26,7 +27,7 @@ async function updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX) {
     return completedTasksArr;
 }
 
-async function getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX) {
+async function getTaskListCount(completedTasksArr, octokit, commentId) {
     var count = 0;
 
     const commentBody = await getGithubComment(octokit, commentId);
@@ -47,7 +48,7 @@ async function getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIS
     return count;
 }
 
-async function runTimer(timeout, octokit, commentId, CHECK_LIST_REGEX) {
+async function runTimer(timeout, octokit, commentId) {
     const count = await getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX);
     var completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
