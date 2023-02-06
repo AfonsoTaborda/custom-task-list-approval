@@ -7,6 +7,7 @@ const inputs = {
     body: core.getInput('comment-body'),
     timeout: parseInt(core.getInput('completion-timeout')),
     deleteCommentAfterCompletion: core.getInput('delete-comment-after-completion')  == 'true',
+    verbose: core.getInput('verbose') == 'true',
 }
 
 module.exports = inputs;

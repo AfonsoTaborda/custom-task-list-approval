@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const {getGithubComment,deleteGithubComment} = require('./github-comment');
+const inputs = require('./inputs');
 
 const CHECK_LIST_REGEX = /\[(x|X|\s)\](.*)/g;
 let completedTasksArr = [];
@@ -57,7 +58,9 @@ async function runTimer(timeout, octokit, commentId) {
     var interval = setInterval(async function() {
         completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
-        console.log(`You have ${sec} seconds and ${completedTasksArr.length} tasks completed`);
+        if(inputs.verbose) {
+            console.log(`You have ${sec} seconds and ${completedTasksArr.length} tasks completed`);
+        }
 
         sec--;
 

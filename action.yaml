@@ -15,8 +15,11 @@ inputs:
   completion-timeout: # In minutes, defines the timeout of the job
     description: 'Verifies that all checklist items have been completed before the timeout'
     default: '60'
-  delete-comment-after-completion: # Boolean
+  delete-comment-after-completion:
     description: 'If set to true, it deletes the task list comment after completion of the job'
+    default: 'true'
+  verbose:
+    description: 'If true, verbose logs will be written'
     default: 'true'
 runs:
   using: 'node16'

@@ -8,7 +8,7 @@ async function initializeComment() {
     }
 
     const octokit = github.getOctokit(inputs.myToken);
-        
+
     var resultComment = "";
 
     if (inputs.title) {
