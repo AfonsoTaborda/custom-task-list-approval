@@ -24,12 +24,6 @@ async function run() {
         if (typeof similarCommentId === "undefined") {
             var comment = await createGithubComment(octokit, resultComment);
             similarCommentId = comment.id;
-
-            /*while(typeof similarCommentId === "undefined") {
-                var pullRequestComments = await listGithubComments(octokit);
-                var similarCommentId = getSimilarGithubCommentId(pullRequestComments, title, body, userChecklist);
-                var comment = await getGithubComment(octokit, similarCommentId);
-            }*/
         }
 
         runTimer(timeout, octokit, similarCommentId);
