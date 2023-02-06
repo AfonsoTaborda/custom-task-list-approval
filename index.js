@@ -8,9 +8,9 @@ async function run() {
         // The YML workflow will need to set myToken with the GitHub Secret Token
         // myToken: ${{ secrets.GITHUB_TOKEN }}
         // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
-        var [octokit, resultComment] = await initializeComment();
+        var [resultComment] = await initializeComment();
 
-        var pullRequestComments = await listGithubComments(octokit);
+        var pullRequestComments = await listGithubComments();
 
         // Check if there are similar comments already posted
         // Otherwise `similarCommentId` will be `undefined`
@@ -21,11 +21,11 @@ async function run() {
         }
 
         if (typeof similarCommentId === "undefined") {
-            var comment = await createGithubComment(octokit, resultComment);
+            var comment = await createGithubComment(resultComment);
             similarCommentId = comment.id;
         }
 
-        runTimer(octokit, similarCommentId);
+        runTimer(similarCommentId);
       } catch (error) {
         core.setFailed(error);
       }
