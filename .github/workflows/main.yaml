@@ -20,8 +20,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: cd src
       - run: npm ci
+        working-directory: ./src
 
       - name: Custom Checklist Approval
         uses: ./
