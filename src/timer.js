@@ -39,7 +39,7 @@ async function getTaskListCount(completedTasksArr, octokit, commentId) {
 
         count++;
 
-        if (isComplete && !completedTasksArr.includes(itemText)) {
+        if (isComplete && completedTasksArr.includes(itemText)) {
             console.log(`${itemText} is complete ✅`);
         } else {
             console.log(`${itemText} has not been completed yet ❌`);
