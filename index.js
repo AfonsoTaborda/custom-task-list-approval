@@ -1,6 +1,6 @@
 const core = require('@actions/core');
-const runTimer = require('./src/timer');
-const {createGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId} = require('./src/github-comment');
+const runTimer = require('./lib/timer');
+const {createGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId} = require('./lib/github-comment');
 
 async function run() {
     try {
