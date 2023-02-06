@@ -15,7 +15,7 @@ async function run() {
 
         // Check if there are similar comments already posted
         // Otherwise `similarCommentId` will be `undefined`
-        var similarCommentId = getSimilarGithubCommentId(pullRequestComments, inputs.title, inputs.body, inputs.userChecklist);
+        var similarCommentId = getSimilarGithubCommentId(pullRequestComments);
 
         if (resultComment === "") {
             throw "The comment to be added is empty!";

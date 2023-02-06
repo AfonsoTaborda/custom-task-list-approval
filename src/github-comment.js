@@ -59,12 +59,12 @@ async function getGithubComment(octokit, commentId) {
     return comment.body;
 }
 
-function getSimilarGithubCommentId(pullRequestComments, title, body, userChecklist) {
+function getSimilarGithubCommentId(pullRequestComments) {
     // Check if there are similar comments already posted
     var similarCommentId;
     if (pullRequestComments.length != 0) {
         for (let comment of pullRequestComments) {
-            if(comment.body.includes(title) && comment.body.includes(body) || comment.body.includes(userChecklist.split(";"))) {
+            if(comment.body.includes(inputs.title) && comment.body.includes(inputs.body) || comment.body.includes(inputs.userChecklist.split(";"))) {
                 similarCommentId = comment.id;
                 console.log(`A similar comment has been found with id: ${similarCommentId}`);
             }
