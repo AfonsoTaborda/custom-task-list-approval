@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const runTimer = require('./lib/timer');
 const {createGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId} = require('./lib/github-comment');
+const CHECK_LIST_REGEX = require('./lib/constants');
 
 async function run() {
     try {
@@ -25,7 +26,18 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        runTimer(similarCommentId);
+        if(inputs.runTimer) {
+          runTimer(similarCommentId);
+        } else {
+          var completedTasksArr = await updateTaskListCompletion(commentId, CHECK_LIST_REGEX);
+
+          if(completedTasksArr.length == count && count != 0) {
+              console.log(`All ${count} tasks have been successfully completed!`);
+              await deleteGithubComment(commentId);
+          } else {
+              core.setFailed(`Not all tasks have been completed, only ${completedTasksArr.length} out of ${count} have been completed.\n Re-run this job once the task list has been completed.`);
+          }
+        }
       } catch (error) {
         core.setFailed(error);
       }
