@@ -12,8 +12,11 @@ inputs:
   checklist-items: # Like checklist item 1;checklist item 2;random item 3;
     description: 'The user-created checklist of items'
     required: true
+  run-with-timer:
+    description: 'If true, then the workflow will use a timer to wait for all task lists in a commment to be completed'
+    default: 'true'
   completion-timeout: # In minutes, defines the timeout of the job
-    description: 'Verifies that all checklist items have been completed before the timeout'
+    description: 'Only active if `run-with-timer` is set to true. Verifies that all checklist items have been completed before the timeout'
     default: '60'
   delete-comment-after-completion:
     description: 'If set to true, it deletes the task list comment after completion of the job'

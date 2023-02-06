@@ -22,6 +22,7 @@ jobs:
           checklist-items: "TODO 1;TODO laundry;Go clean the car;" # Required
           comment-title: "TODO List" # Optional
           comment-body: "Please finish the TODO list below before moving to the next step:" # Optional
-          completion-timeout: 1 # Optional
+          run-with-timer: false # Optional, defaults to true if not set
+          completion-timeout: 1 # Optional, only valid if `run-with-timer` is set to true
           delete-comment-after-completion: false # Optional
           verbose: true # Optional

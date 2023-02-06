@@ -49,33 +49,40 @@ async function getTaskListCount(completedTasksArr, octokit, commentId) {
     return count;
 }
 
-async function runTimer(timeout, octokit, commentId) {
+async function runTimer(octokit, commentId) {
     const count = await getTaskListCount(completedTasksArr, octokit, commentId, CHECK_LIST_REGEX);
     var completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
 
-    console.log(`Found ${count} tasks to complete, starting the timer...`);
-    var sec = timeout * 60;
-    var interval = setInterval(async function() {
-        setTimeout(async () => {
+    if(inputs.runTimer) {
+        console.log(`Found ${count} tasks to complete, starting the timer...`);
+        var sec = inputs.timeout * 60;
+
+        var interval = setInterval(async function() {
             completedTasksArr = await updateTaskListCompletion(octokit, commentId, CHECK_LIST_REGEX);
-        }, 2000);
-
-        if(inputs.verbose) {
-            console.log(`You have ${sec} seconds and ${completedTasksArr.length} tasks completed`);
-        }
-
-        sec--;
-
-        if (sec < 0 || completedTasksArr.length == count && count != 0) {
-            if(completedTasksArr.length != count) {
-                core.setFailed("The timer has ended and not all the tasks have been completed, failing the workflow...");
+    
+            if(inputs.verbose) {
+                console.log(`You have ${sec} seconds and ${completedTasksArr.length} tasks completed`);
             }
-
-            console.log(`Clearing the timeout with sec = ${sec} and completedTasksArr.length = ${completedTasksArr.length}`);
-            await deleteGithubComment(octokit, commentId);
-            clearInterval(interval);
+    
+            sec--;
+    
+            if (sec < 0 || completedTasksArr.length == count && count != 0) {
+                if(completedTasksArr.length != count) {
+                    core.setFailed("The timer has ended and not all the tasks have been completed, failing the workflow...");
+                }
+    
+                console.log(`Clearing the timeout with sec = ${sec} and completedTasksArr.length = ${completedTasksArr.length}`);
+                await deleteGithubComment(octokit, commentId);
+                clearInterval(interval);
+            }
+        }, 1000);
+    } else {
+        if(completedTasksArr.length == count && count != 0) {
+            console.log(`All ${count} tasks have been successfully completed!`);
+        } else {
+            core.setFailed(`Not all tasks have been completed, only ${completedTasksArr.length} out of ${count} have been completed...`);
         }
-    }, 1000);
+    }
 }
 
 module.exports = runTimer;

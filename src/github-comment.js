@@ -29,7 +29,7 @@ async function initializeComment() {
 
     console.log("Finished initializing the comment variables");
 
-    return [octokit, inputs.timeout, resultComment, inputs.userChecklist, inputs.title, inputs.body];
+    return [octokit, resultComment];
 }
 
 async function createGithubComment(octokit, commentBody) {
