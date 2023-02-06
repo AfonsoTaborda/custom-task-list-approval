@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Custom Checklist Approval
-        uses: ./
+        uses: ./src/
         with:
           token: ${{ secrets.GITHUB_TOKEN }} # Required
           checklist-items: "TODO 1;TODO laundry;Go clean the car;" # Required
