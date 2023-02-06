@@ -80,8 +80,7 @@ async function runTimer(octokit, commentId) {
         if(completedTasksArr.length == count && count != 0) {
             console.log(`All ${count} tasks have been successfully completed!`);
         } else {
-            core.setFailed(`Not all tasks have been completed, only ${completedTasksArr.length} out of ${count} have been completed.
-            Re-run this job once the task list has been completed`);
+            core.setFailed(`Not all tasks have been completed, only ${completedTasksArr.length} out of ${count} have been completed.\n Re-run this job once the task list has been completed-`);
         }
     }
 }
