@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const {createGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId} = require('./lib/github-comment');
+const {createGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId, deleteGithubComment} = require('./lib/github-comment');
 const inputs = require('./lib/inputs');
 const {runTimer, updateTaskListCompletion, getTaskListCount} = require('./lib/timer');
 
