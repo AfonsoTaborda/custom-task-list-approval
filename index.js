@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const {createGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId} = require('./lib/github-comment');
 const CHECK_LIST_REGEX = require('./lib/constants');
 const inputs = require('./lib/inputs');
+const runTimer = require('./lib/timer');
 
 async function run() {
     try {
