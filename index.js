@@ -15,18 +15,20 @@ async function run() {
 
         if (typeof similarCommentId === "undefined") {
             var comment = await createGithubComment(resultComment);
-            similarCommentId = comment.id;
+            commentId = comment.id;
+        } else {
+          commentId = similarCommentId;
         }
 
         if(!inputs.timeout) {
-          runTimer(similarCommentId);
+          runTimer(commentId);
         } else {
-          const count = await getTaskListCount(similarCommentId);
-          completedTasksArr = await updateTaskListCompletion(similarCommentId);
+          const count = await getTaskListCount(commentId);
+          completedTasksArr = await updateTaskListCompletion(commentId);
 
           if(completedTasksArr.length == count && count != 0) {
               console.log(`All ${count} tasks have been successfully completed!`);
-              await deleteGithubComment(similarCommentId);
+              await deleteGithubComment(commentId);
           } else {
               core.setFailed(`Not all tasks have been completed, only ${completedTasksArr.length} out of ${count} have been completed.\n Re-run this job once the task list has been completed.`);
           }
