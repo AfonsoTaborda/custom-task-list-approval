@@ -20,7 +20,7 @@ async function run() {
 
         console.log(`Timwout value: ${inputs.timeout}`);
 
-        if(typeof inputs.timeout !== undefined) {
+        if(inputs.timeout) {
           runTimer(commentID);
         } else {
           const count = await getTaskListCount(commentID);
