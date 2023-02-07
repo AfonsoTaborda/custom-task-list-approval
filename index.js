@@ -19,7 +19,7 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        if(typeof inputs.timeout !== "undefined") {
+        if(!inputs.timeout) {
           runTimer(similarCommentId);
         } else {
           completedTasksArr = await updateTaskListCompletion(similarCommentId);
