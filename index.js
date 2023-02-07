@@ -11,7 +11,7 @@ async function run() {
 
         // Check if there are similar comments already posted
         // Otherwise `commentID` will be `undefined`
-        var commentID = getSimilarGithubCommentId(pullRequestComments);
+        var commentID = await getSimilarGithubCommentId(pullRequestComments);
 
         if (typeof commentID === "undefined") {
             var comment = await createGithubComment(resultComment);
