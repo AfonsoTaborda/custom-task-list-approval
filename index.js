@@ -18,8 +18,6 @@ async function run() {
             commentID = comment.id;
         }
 
-        console.log(`Timwout value: ${inputs.timeout}`);
-
         if(inputs.timeout) {
           runTimer(commentID);
         } else {
