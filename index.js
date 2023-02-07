@@ -13,7 +13,7 @@ async function run() {
         // Otherwise `commentID` will be `undefined`
         var commentID = await getSimilarGithubCommentId(pullRequestComments);
 
-        if (!commentID) {
+        if (typeof commentID === "undefined") {
             var comment = await createGithubComment(resultComment);
             commentID = comment.id;
         }
