@@ -18,7 +18,7 @@ async function run() {
             commentID = comment.id;
         }
 
-        if(typeof inputs.timeout !== "NaN") {
+        if(typeof inputs.timeout !== undefined) {
           runTimer(commentID);
         } else {
           const count = await getTaskListCount(commentID);
