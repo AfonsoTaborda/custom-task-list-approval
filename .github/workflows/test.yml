@@ -36,9 +36,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tasklist-items: "TODO 1;
-          TODO lay;
+          TODO laundry;
           Clean the car;"
-          comment-title: "TODO List"
-          comment-body: "Please finish the TODO list below before moving to the next step:"
+          comment-title: "TO List"
+          comment-body: "Please sh the TODO list below before moving to the next step:"
           delete-comment-after-completion: false # Optional
           debug-logs: true # Optional, control's the logging debug-logs setting for the timer (if enabled)
