@@ -32,8 +32,7 @@ jobs:
             Clean the car;
           comment-title: "TODO List"
           comment-body: "Please finish the TODO list below before moving to the next step:"
-          run-with-timer: true # Optional, defaults to true if not set
-          completion-timeout: 1 # Optional, only valid if `run-with-timer` is set to true
+          completion-timeout: 1 # Optional, if set it will run a timer until timing out
           delete-comment-after-completion: true # Optional
           debug-logs: true # Optional, control's the logging debug-logs setting for the timer (if enabled)
 ```

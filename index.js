@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const runTimer = require('./lib/timer');
 const {createGithubComment, listGithubComments, initializeComment, getSimilarGithubCommentId} = require('./lib/github-comment');
 const CHECK_LIST_REGEX = require('./lib/constants');
 const inputs = require('./lib/inputs');
@@ -19,7 +18,7 @@ async function run() {
             similarCommentId = comment.id;
         }
 
-        if(inputs.runTimer) {
+        if(typeof inputs.timeout !== "undefined") {
           runTimer(similarCommentId);
         } else {
           completedTasksArr = await updateTaskListCompletion(commentId, CHECK_LIST_REGEX);

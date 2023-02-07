@@ -15,12 +15,8 @@ inputs:
   tasklist-items: # Like tasklist item 1;tasklist item 2;random item 3;
     description: 'The user-created tasklist of items'
     required: true
-  run-with-timer:
-    description: 'If true, then the workflow will use a timer to wait for all task lists in a commment to be completed'
-    default: 'true'
   completion-timeout: # In minutes, defines the timeout of the job
-    description: 'Only active if `run-with-timer` is set to true. Verifies that all tasklist items have been completed before the timeout'
-    default: '60'
+    description: 'If set, it starts a timer and meanwhile verifies that all tasklist items have been completed before the timeout'
   delete-comment-after-completion:
     description: 'If set to true, it deletes the task list comment after completion of the job'
     default: 'true'
