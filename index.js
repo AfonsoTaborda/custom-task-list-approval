@@ -22,7 +22,7 @@ async function run() {
         if(typeof inputs.timeout !== "undefined") {
           runTimer(similarCommentId);
         } else {
-          completedTasksArr = await updateTaskListCompletion(commentId, CHECK_LIST_REGEX);
+          completedTasksArr = await updateTaskListCompletion(similarCommentId);
 
           if(completedTasksArr.length == count && count != 0) {
               console.log(`All ${count} tasks have been successfully completed!`);
