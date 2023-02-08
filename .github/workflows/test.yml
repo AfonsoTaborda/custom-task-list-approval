@@ -1,0 +1,33 @@
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  create-tasklist:
+    runs-on: ubuntu-latest
+    name: Create a Tasklist
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install modules
+        run: npm install
+
+      - name: Custom Tasklist Approval
+        uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tasklist-items: "TODO 1;
+          TODO laundry;
+          Clean the car;"
+          comment-title: "TODO List"
+          comment-body: "Please finish the TODO list below before moving to the next step:"
+          delete-previous-similar-tasklists: false
+          completion-timeout: 1 # Optional, only valid if `run-with-timer` is set to true
+          delete-comment-after-completion: false # Optional
+          debug-logs: true # Optional, control's the logging debug-logs setting for the timer (if enabled)
