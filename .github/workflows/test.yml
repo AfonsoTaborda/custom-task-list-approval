@@ -28,6 +28,6 @@ jobs:
           comment-title: "TODO List"
           comment-body: "Please finish the TODO list below before moving to the next step:"
           delete-previous-similar-tasklists: false
-          completion-timeout: 1 # Optional, only valid if `run-with-timer` is set to true
+          completion-timeout: 61 # Optional, only valid if `run-with-timer` is set to true
           delete-comment-after-completion: false # Optional
           debug-logs: true # Optional, control's the logging debug-logs setting for the timer (if enabled)
