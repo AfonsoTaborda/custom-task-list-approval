@@ -17,6 +17,9 @@ inputs:
     required: true
   completion-timeout: # In minutes, defines the timeout of the job
     description: 'If set, it starts a timer and meanwhile verifies that all tasklist items have been completed before the timeout'
+  delete-previous-similar-tasklists:
+    description: 'If true, it will delete all comments that contains the exact same task list items, except the latest one'
+    default: 'false'
   delete-comment-after-completion:
     description: 'If set to true, it deletes the task list comment after completion of the job'
     default: 'true'
