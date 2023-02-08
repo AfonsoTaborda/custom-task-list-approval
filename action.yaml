@@ -15,7 +15,7 @@ inputs:
   tasklist-items: # Like tasklist item 1;tasklist item 2;random item 3;
     description: 'The user-created tasklist of items'
     required: true
-  completion-timeout: # In minutes, defines the timeout of the job
+  completion-timeout: # In seconds, defines the timeout of the job
     description: 'If set, it starts a timer and meanwhile verifies that all tasklist items have been completed before the timeout'
   delete-previous-similar-tasklists:
     description: 'If true, it will delete all comments that contains the exact same task list items, except the latest one'

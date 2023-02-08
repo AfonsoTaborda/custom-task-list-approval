@@ -32,7 +32,7 @@ jobs:
             Clean the car;
           comment-title: "TODO List" # Defines the title of the comment (optional)
           comment-body: "Please finish the TODO list below before moving to the next step:" # Defines the body of text (optional) right before the task list
-          completion-timeout: 1 # Optional, if set it will run a timer until timing out
+          completion-timeout: 1 # Optional, if set it will run a timer until timing out (in seconds)
           delete-previous-similar-tasklists: false # Optional, if true it will delete all previous similar task lists and creates a new one. Defaults to false if not set.
           delete-comment-after-completion: false # Optional, if set to true it deletes the create comment after completion of its tasks. Defaults to true.
           debug-logs: true # Optional, control's the logging debug-logs setting for the timer (if enabled).
