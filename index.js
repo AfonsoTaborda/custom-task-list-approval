@@ -14,8 +14,12 @@ async function run() {
         var commentID = await GetSimilarGithubCommentId(pullRequestComments);
 
         if (typeof commentID === "undefined") {
-            var comment = await CreateGithubComment(resultComment);
-            commentID = comment.id;
+          var comment = await CreateGithubComment(resultComment);
+          commentID = comment.id;
+        } else {
+          await DeleteGithubComment(commentID)
+          var comment = await CreateGithubComment(resultComment);
+          commentID = comment.id;
         }
 
         if(inputs.timeout) {
